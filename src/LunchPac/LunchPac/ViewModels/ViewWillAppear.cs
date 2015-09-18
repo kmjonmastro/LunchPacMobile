@@ -20,20 +20,26 @@ namespace LunchPac
         public LandingPageViewModel(INavigator Navigator)
         {
             this.Navigator = Navigator;
-
-            Restaurants = new ObservableCollection<Restaurant>()
-            {
-                new Restaurant{ RestaurantName = "Taste Of Italy", RestaurantId = 1 },
-                new Restaurant{ RestaurantName = "WAAB", RestaurantId = 2 }
-            };
-
-            Orders = new ObservableCollection<Order>()
-            {
-                new Order{ OrderItem = "Fried Chicken", RestaurantId = 1, OrderComments = "Fries" },
-                new Order{ OrderItem = "Bean Soup", RestaurantId = 2, OrderComments = "Fruit Cup" }
-            };
         }
 
+        public new void SetState<T>(Action<T> action) where T : class, IViewModel
+        {
+            action(this as T);
+        }
+
+        public void HandleRestaurantSelected(Restaurant rest)
+        {
+            if (rest != null)
+                Navigator.PushAsync<RestaurantViewModel>((vm) => vm.Restaurant = rest);
+        }
+
+        public void HandleOrderSelected(Order order)
+        {
+            if (order != null)
+                Navigator.PushAsync<OrderFormViewModel>((vm) =>
+                    {
+                    });
+        }
     }
 }
 

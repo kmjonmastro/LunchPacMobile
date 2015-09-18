@@ -4,6 +4,8 @@ namespace LunchPac
 {
     public class LoginManager
     {
+        const string LoginUrl = "api/login";
+
         public class LoginCredentials
         {
             public LoginCredentials(string uName, string pwd)
@@ -26,14 +28,20 @@ namespace LunchPac
             public User User { get; set; }
         }
 
-        public LoginManager()
+        public void HasToken()
         {
+            
         }
 
-        public void Login(LoginCredentials loginCred)
+        public void DeleteToken()
         {
+
         }
 
+        public void Login(string uName, string pwd)
+        {
+            
+        }
     }
 }
 

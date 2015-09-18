@@ -16,7 +16,8 @@ namespace LunchPac
 
         public void SetState<T>(Action<T> action) where T : class, IViewModel
         {
-            action(this as T);
+            if (action != null)
+                action(this as T);
         }
 
         string _title;

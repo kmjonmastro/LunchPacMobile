@@ -1,5 +1,16 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="LunchPac.RestaurantPage">
 	<ContentPage.Content>
+		<StackLayout VerticalOptions="CenterAndExpand">
+			<Button Text="Menu" Clicked="OnButtonClicked"></Button> 
+			<Label Text="Previous Orders" />
+			<ListView x:Name="OrdersListView" ItemSelected="OrderSelected" ItemsSource="{Binding PreviousOrders}">
+		    <ListView.ItemTemplate>
+		      <DataTemplate>
+		        <TextCell Text="{Binding OrderItem}" />
+		      </DataTemplate>
+		    </ListView.ItemTemplate>
+		  </ListView>
+		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

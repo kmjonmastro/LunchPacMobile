@@ -8,7 +8,7 @@ namespace LunchPac
     {
         Restaurant _Restaurant;
 
-        public Restaurant Restaurant { get { return _Restaurant; } set { SetRaiseIfPropertyChanged(ref _Restaurant, value); } }
+        public Restaurant Restaurant { get { return _Restaurant; } set { _Restaurant = value; } }
 
         string _OrderItem;
 

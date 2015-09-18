@@ -16,15 +16,18 @@ namespace LunchPac
             BindingContext = LandingPageViewModel;
         }
 
-        public  void RestaurantSelected(object sender, EventArgs e)
+        public void RestaurantSelected(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("RestaurantSelected");
+            var item = ((ListView)sender).SelectedItem;
+            ((ListView)sender).SelectedItem = null;
+            LandingPageViewModel.HandleRestaurantSelected(item as Restaurant);
         }
 
         public void OrderSelected(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("OrderSelected");
-        
+            var item = ((ListView)sender).SelectedItem;
+            ((ListView)sender).SelectedItem = null;
+            LandingPageViewModel.HandleOrderSelected(item as Order);
         }
     }
 }

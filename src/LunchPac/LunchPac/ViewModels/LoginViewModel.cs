@@ -5,14 +5,17 @@ namespace LunchPac
     public class LoginViewModel : ViewModelBase
     {
         readonly INavigator Navigator;
+        readonly LoginManager LoginManager;
 
-        public LoginViewModel(INavigator navigator)
+        public LoginViewModel(INavigator navigator, LoginManager loginManager)
         {
             #if DEBUG
             EmailAdress = "dr5@demo.mds";
             Password = "letmein123";
             #endif
+
             Navigator = navigator;
+            LoginManager = loginManager;
         }
 
         const string LoginSecureKey = "Session";
