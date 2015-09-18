@@ -28,11 +28,10 @@ namespace LunchPac.Controllers
 
             var user = Repository<User>.Select(u => u.UserName, credentials.Username);
 
-            if (user != null)
-                if (user.Password != credentials.Password)
-                    error = "Invalid password";
-            else
+            if (user == null)
                 error = "Invalid user name";
+            else if (user.Password != credentials.Password)
+                error = "Invalid password";
 
             return Request.CreateResponse(HttpStatusCode.OK, new LoginResponse
                 {

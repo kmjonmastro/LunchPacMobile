@@ -80,6 +80,21 @@ namespace LunchPac.Repositories
             return ExecuteSelect(fieldName, value);
         }
 
+        public static T SelectLast()
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = String.Format("SELECT TOP 1 * FROM {0} ORDER BY {1} DESC", TableName, PrimaryKeyFieldName);
+
+                    return ReadData(cmd).SingleOrDefault();
+                }
+            }
+        }
+
         public static void Delete(object id)
         {
             ExecuteDelete(PrimaryKeyFieldName, id);

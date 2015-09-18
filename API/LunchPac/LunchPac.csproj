@@ -90,12 +90,15 @@
     <Compile Include="Attributes\PrimaryKey.cs" />
     <Compile Include="Attributes\Table.cs" />
     <Compile Include="ClientReadyJsonResolver.cs" />
+    <Compile Include="Controllers\StatusController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OrderHistoryController.cs" />
     <Compile Include="Controllers\RestaurantController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderHistory.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Restaurant.cs" />
     <Compile Include="Models\User.cs" />
