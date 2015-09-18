@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			x:Class="PestPacMobile.LoginPage">
+	<ContentPage.Content>
+	<StackLayout
+		VerticalOptions="FillAndExpand"
+		Spacing="20" Padding="0, 20, 0, 0">
+		  	<StackLayout.Padding>
+			    <OnPlatform x:TypeArguments="Thickness"
+			                iOS="0, 20, 0, 0"/>
+			</StackLayout.Padding>
+			<Image Source="LogoBlue" Aspect="AspectFit"></Image>
+			<StackLayout
+				BackgroundColor="Transparent"
+				VerticalOptions="FillAndExpand"
+				Spacing="20"
+				Padding="20, 0, 20, 0">
+				<Entry Placeholder="Username" Text="{Binding EmailAdress}" HeightRequest="40" Keyboard="Email"/>
+				<Entry Placeholder="Password" Text="{Binding Password}" HeightRequest="40" IsPassword="true" />
+				<Button  Text="Login" HeightRequest="40" Clicked="OnLoginButtonClicked" IsEnabled="{Binding LoginButtonEnabled}" x:Name="LoginButton"/>
+				<Label x:Name="ErrorLabel" Text="{Binding LoginError}" IsVisible="{Binding LoginErrorVisible}" TextColor="Gray" XAlign="Center"/>
+			</StackLayout>
+	</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,4 @@
+[submodule "src/Libs/MobileCore"]
+	path = src/Libs/MobileCore
+	url = git@github.com:WorkWave/MobileCore.git
+	branch = qa

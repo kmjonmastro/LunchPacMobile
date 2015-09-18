@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="hello">Hello World, Click Me!</string>
+	<string name="app_name">WW Mobile</string>	
+	<string name="login_failure">Login Failure</string>
+	<string name="invalid_username_password">Invalid username or password</string>
+	<string name="no_internet_connection">No Internet Connection</string>
+	<string name="appt_detail">Appointment Detail</string>
+	<string name="appts">Appointments</string>
+	<string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="phone">Phone</string>
+    <string name="address">Address</string>
+    <string name="email">Email</string>
+    <string name="location">Location</string>
+    <string name="status">Status</string>
+    <string name="services">Services</string>
+    <string name="Total">Total</string>
+    <string name="Start">Start</string>
+    <string name="Stop">Stop</string>
+    <string name="Login">Log In</string>
+    <string name="Password">Password</string>
+    <string name="Email">Email</string>
+    <string name="Instructions">Instructions</string>
+    <string name="Today">Today</string>
+    <string name="Menu">Menu</string>
+    <string name="failed_to_download_error">Failed to download. Please try again.</string>
+    <string name="About">About</string>
+    <string name="OK">ok</string>
+</resources>

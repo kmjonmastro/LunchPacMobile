@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{9CE160E0-9136-4F3A-9852-5C203D4FC56B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>PestPacMobile.iOS</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>PestPacMobile.iOS</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG;ENABLE_TEST_CLOUD;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchArch>i386</MtouchArch>
+    <MtouchLink>None</MtouchLink>
+    <MtouchDebug>true</MtouchDebug>
+    <MtouchProfiling>true</MtouchProfiling>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchArch>i386</MtouchArch>
+    <ConsolePause>false</ConsolePause>
+    <MtouchLink>None</MtouchLink>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG;ENABLE_TEST_CLOUD;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchProfiling>true</MtouchProfiling>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchDebug>true</MtouchDebug>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.iOS" />
+    <Reference Include="Xamarin.Forms.Platform.iOS">
+      <HintPath>..\packages\Xamarin.Forms.1.4.4.6392\lib\Xamarin.iOS10\Xamarin.Forms.Platform.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Core">
+      <HintPath>..\packages\Xamarin.Forms.1.4.4.6392\lib\Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml">
+      <HintPath>..\packages\Xamarin.Forms.1.4.4.6392\lib\Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Platform">
+      <HintPath>..\packages\Xamarin.Forms.1.4.4.6392\lib\Xamarin.iOS10\Xamarin.Forms.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.5.2\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\packages\Rx-Interfaces.2.2.5\lib\portable-windows8+net45+wp8\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\packages\Rx-Core.2.2.5\lib\portable-windows8+net45+wp8\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\packages\Rx-Linq.2.2.5\lib\portable-windows8+net45+wp8\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices">
+      <HintPath>..\packages\Rx-PlatformServices.2.2.5\lib\portable-windows8+net45+wp8\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Splat">
+      <HintPath>..\packages\Splat.1.6.2\lib\Xamarin.iOS10\Splat.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Akavache">
+      <HintPath>..\packages\akavache.core.4.1.1\lib\Xamarin.iOS10\Akavache.dll</HintPath>
+    </Reference>
+    <Reference Include="Akavache.Sqlite3">
+      <HintPath>..\packages\akavache.sqlite3.4.1.1\lib\Portable-Net45+Win8+WP8+Wpa81\Akavache.Sqlite3.dll</HintPath>
+    </Reference>
+    <Reference Include="Calabash">
+      <HintPath>..\packages\Xamarin.TestCloud.Agent.0.16.1\lib\Xamarin.iOS10\Calabash.dll</HintPath>
+    </Reference>
+    <Reference Include="Refractored.Xam.Vibrate.Abstractions">
+      <HintPath>..\packages\Xam.Plugins.Vibrate.1.0.1\lib\Xamarin.iOS10\Refractored.Xam.Vibrate.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Refractored.Xam.Vibrate">
+      <HintPath>..\packages\Xam.Plugins.Vibrate.1.0.1\lib\Xamarin.iOS10\Refractored.Xam.Vibrate.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PestPacMobile\PestPacMobile.csproj">
+      <Project>{BEC20C47-8E84-45A0-9E81-17D944614AB7}</Project>
+      <Name>PestPacMobile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libs\MobileCore\src\Mobile.Core.Common.iOS\Mobile.Core.Common.iOS.csproj">
+      <Project>{6DBC4319-6E6D-42C9-8843-5DE483FB0D5F}</Project>
+      <Name>Mobile.Core.Common.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libs\MobileCore\src\Mobile.Core\Mobile.Core.csproj">
+      <Project>{55B05B5B-6CD0-46E1-BF38-36C9427D2D1A}</Project>
+      <Name>Mobile.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Info.plist" />
+    <None Include="Entitlements.plist" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="AppDelegate.cs" />
+    <Compile Include="AkavacheSqliteLinkerOverride.cs" />
+    <Compile Include="iOSModule.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ITunesArtwork Include="ITunesArtwork" />
+    <ITunesArtwork Include="ITunesArtwork%402x" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <Import Project="..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
+  <Import Project="..\packages\SQLitePCL.raw_basic.0.8.2\build\Xamarin.iOS10\SQLitePCL.raw_basic.targets" Condition="Exists('..\packages\SQLitePCL.raw_basic.0.8.2\build\Xamarin.iOS10\SQLitePCL.raw_basic.targets')" />
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Include="Resources\LaunchScreen.xib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-100.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-114.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-120.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-144.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-152.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-180.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-29.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-40.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-50.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-57.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-58.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-72.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-76.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-80.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-87.png" />
+    <ImageAsset Include="Resources\Images.xcassets\CalendarIcon.imageset\CalendarIcon%401x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\CalendarIcon.imageset\CalendarIcon%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\CalendarIcon.imageset\CalendarIcon%403x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\CalendarIcon.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\DisclosureArrow.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\DisclosureArrow.imageset\DisclosureArrow%401x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\DisclosureArrow.imageset\DisclosureArrow%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\DisclosureArrow.imageset\DisclosureArrow%403x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ListIcon.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\ListIcon.imageset\ListIcon.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ListIcon.imageset\ListIcon%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ListIcon.imageset\ListIcon%403x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LoginImage.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\LoginImage.imageset\logo.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LoginImage.imageset\logo%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LogoBlue.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\LogoBlue.imageset\logoblue%401x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LogoBlue.imageset\logoblue%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LogoBlue.imageset\logoblue%403x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LogoWhite.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\LogoWhite.imageset\logowhite%401x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LogoWhite.imageset\logowhite%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LogoWhite.imageset\logowhite%403x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\MapIcon.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\MapIcon.imageset\MapIcon%401x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\MapIcon.imageset\MapIcon%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\MapIcon.imageset\MapIcon%403x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\MenuIcon.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\MenuIcon.imageset\Menu.png" />
+    <ImageAsset Include="Resources\Images.xcassets\link.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\link.imageset\link.png" />
+    <ImageAsset Include="Resources\Images.xcassets\stop.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\stop.imageset\stop.pdf" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-568h%402x.png" />
+  </ItemGroup>
+</Project>
