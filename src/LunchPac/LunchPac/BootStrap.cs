@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Xamarin.Forms;
 using Akavache;
+using System.Threading.Tasks;
 
 namespace LunchPac
 {
@@ -16,11 +17,12 @@ namespace LunchPac
         protected override void ConfigureApplication(IContainer container)
         {
             //Init Cache
-            BlobCache.ApplicationName = "lunchpac";
+            BlobCache.ApplicationName = Configuration.DbName;
 
             // set main page
             var viewFactory = container.Resolve<IViewFactory>();
-            var mainPage = viewFactory.Resolve<LoginViewModel>();
+            Page mainPage; 
+            mainPage = viewFactory.Resolve<LoginViewModel>();
             var navigationPage = new NavigationPage(mainPage);
             _application.MainPage = navigationPage;
         }

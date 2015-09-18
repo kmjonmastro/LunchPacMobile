@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace LunchPac
 {
@@ -10,8 +11,8 @@ namespace LunchPac
         public LoginViewModel(INavigator navigator, LoginManager loginManager)
         {
             #if DEBUG
-            EmailAdress = "dr5@demo.mds";
-            Password = "letmein123";
+            EmailAdress = "karim";
+            Password = "karim";
             #endif
 
             Navigator = navigator;
@@ -46,19 +47,20 @@ namespace LunchPac
             LoginErrorVisible = false;
             try
             {
-//                Task.Run(async () =>
-//                    {
-//                        var result = await LoginProxy.LoginAsync(EmailAdress, Password, "iOS", Guid.NewGuid().ToString());
-//                        BlobCache.Secure.InsertObject<LoginProxy.LoginResult>(LoginSecureKey, result);
-//                    }).GetAwaiter().GetResult();
-                Navigator.PushAsync<LandingPageViewModel>(lv =>
+                var res = Task.Run(async () =>
                     {
-                    });
+                        return await LoginManager.LoginAsync(EmailAdress, Password).ConfigureAwait(false);
+                    }).GetAwaiter().GetResult();
+                
+                if (res)
+                {
+                    Navigator.PushAsync<LandingPageViewModel>(); 
+                }
                 return true;
             }
-            catch (Exception le)
+            catch (Exception e)
             {
-                LoginError = le.Message;
+                LoginError = e.Message;
                 LoginErrorVisible = true;
                 return false;
             }
