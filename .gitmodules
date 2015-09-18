@@ -1,0 +1,3 @@
+[submodule "src/LunchPac/Libs/MobileCore"]
+	path = src/LunchPac/Libs/MobileCore
+	url = git@github.com:WorkWave/MobileCore.git
