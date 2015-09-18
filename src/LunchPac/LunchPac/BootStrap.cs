@@ -27,12 +27,15 @@ namespace LunchPac
 
         protected override void ConfigureCore(ContainerBuilder builder)
         {
-//            builder.RegisterType<LoginProxy>().AsSelf().SingleInstance();
-
             builder.RegisterType<LoginViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<LoginPage>().AsSelf().SingleInstance();
+
             builder.RegisterType<LandingPage>().AsSelf().SingleInstance();
             builder.RegisterType<LandingPageViewModel>().AsSelf().SingleInstance();
+
+            builder.RegisterType<OrderFormPage>().AsSelf().SingleInstance();
+            builder.RegisterType<OrderFormViewModel>().AsSelf().SingleInstance();
+
             base.ConfigureCore(builder);
         }
 
@@ -40,6 +43,7 @@ namespace LunchPac
         {
             viewFactory.Register<LoginViewModel, LoginPage>();
             viewFactory.Register<LandingPageViewModel, LandingPage>();
+            viewFactory.Register<OrderFormViewModel, OrderFormPage>();
         }
     }
 }

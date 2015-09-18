@@ -6,6 +6,8 @@ namespace LunchPac
 {
     public class App : Application
     {
+        const string LunchPacUrl = "http://lunchpac.marathondata.com/";
+
         public App(PlatformModule module)
         {
             var bootStrap = new BootStrap(this);

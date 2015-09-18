@@ -5,5 +5,23 @@
 	xmlns:sys="clr-namespace:System;assembly=mscorlib" Title="{Binding Source={x:Static sys:DateTime.Today},   
        StringFormat='Today {0:dd/MM/yy}'}">
 	<ContentPage.Content>
+	<StackLayout VerticalOptions="Start">
+		<Label Text="Restaurants" />
+		<ListView x:Name="RestaurantListView" ItemsSource="{Binding Restaurants}">
+		    <ListView.ItemTemplate>
+		      <DataTemplate>
+		        <TextCell Text="{Binding RestaurantName}" />
+		      </DataTemplate>
+		    </ListView.ItemTemplate>
+		  </ListView>
+		  <Label Text="Previous Orders" />
+		  <ListView x:Name="PrevisousOrdersListView" ItemsSource="{Binding Orders}">
+		    <ListView.ItemTemplate>
+		      <DataTemplate>
+		        <TextCell Text="{Binding OrderItem}" />
+		      </DataTemplate>
+		    </ListView.ItemTemplate>
+		  </ListView>
+	</StackLayout>
 	</ContentPage.Content>
 </ContentPage>
