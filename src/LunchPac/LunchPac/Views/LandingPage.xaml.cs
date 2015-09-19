@@ -13,6 +13,14 @@ namespace LunchPac
         {
             InitializeComponent();
             LandingPageViewModel = landingPageViewModel;
+            BindingContext = LandingPageViewModel;
+        }
+
+
+        protected override void OnAppearing()
+        {
+            LandingPageViewModel.OnAppearing();
+            base.OnAppearing();
         }
 
         public void RestaurantSelected(object sender, EventArgs e)

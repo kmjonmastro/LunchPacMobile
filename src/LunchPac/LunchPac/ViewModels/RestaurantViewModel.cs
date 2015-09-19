@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using System.Linq;
 
 namespace LunchPac
 {
@@ -11,40 +12,44 @@ namespace LunchPac
 
         public string MenuUrl { get { return _MenuUrl; } set { SetRaiseIfPropertyChanged(ref _MenuUrl, value); } }
 
+        public bool _MenuButtonVisible;
+
+        public bool MenuButtonVisible { get { return _MenuButtonVisible; } set { SetRaiseIfPropertyChanged(ref _MenuButtonVisible, value); } }
+
         public ObservableCollection<Order> _PreviousOrders;
 
         public ObservableCollection<Order> PreviousOrders { get { return _PreviousOrders; } set { SetRaiseIfPropertyChanged(ref _PreviousOrders, value); } }
 
-        public Restaurant _Restaurant;
-
-        public Restaurant Restaurant
+        Restaurant Restaurant
         {
-            get { return _Restaurant; }
-            set
-            {
-                var rest = value;
-                _Restaurant = rest;
-                _MenuUrl = rest.Menu;
-
-                Task.Run(async () =>
-                    {
-                        //TODO: go get the orders online;
-
-                        //Dummy Data
-                        Device.BeginInvokeOnMainThread(() =>
-                            {
-                                PreviousOrders = new ObservableCollection<Order>(){ new Order{ OrderItem = "Tomatoe Soup", RestaurantId = rest.RestaurantId } };
-                            });
-                    });
-            }
+            get;
+            set;
         }
 
         readonly INavigator Navigator;
+        readonly  DomainManager DomainManager;
 
-        public RestaurantViewModel(INavigator Navigator)
+        public RestaurantViewModel(INavigator cavigator, DomainManager domainManager)
         {
-            this.Navigator = Navigator;
+            Navigator = cavigator;
+            DomainManager = domainManager;
         }
+
+        public void SetRestaurant(Restaurant rest)
+        {
+            Restaurant = rest;
+            MenuUrl = Restaurant.GetMenuUrl();
+            MenuButtonVisible = !string.IsNullOrEmpty(Restaurant.Menu);
+
+            //fetch the orders
+            Task.Run(async () =>
+                {
+                    var orders = await DomainManager.GetHistory();
+                    var filtered = orders.Where(o => o.RestaurantId == Restaurant.RestaurantId);
+                    PreviousOrders = new ObservableCollection<Order>(filtered);
+                });
+        }
+
 
         public void PreviousOrderSelected(Order order)
         {
@@ -56,9 +61,16 @@ namespace LunchPac
             }
         }
 
+        public void NewOrderSelected()
+        {
+            Navigator.PushAsync<OrderFormViewModel>((vm) =>
+                {
+                });
+        }
+
         public void MenuSelected()
         {
-            
+            Device.OpenUri(new Uri(Restaurant.GetMenuUrl()));
         }
     }
 }

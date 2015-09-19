@@ -1,6 +1,9 @@
 ﻿using System;
 
 using Xamarin.Forms;
+using Akavache;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 namespace LunchPac
 {
@@ -22,6 +25,11 @@ namespace LunchPac
         protected override void OnSleep()
         {
             // Handle when your app sleeps
+            Task.Run(() =>
+                {
+                    BlobCache.InMemory.InvalidateAll();
+                    BlobCache.LocalMachine.InvalidateAll();
+                });
         }
 
         protected override void OnResume()

@@ -50,16 +50,9 @@ namespace LunchPac
 
         public async Task<LoginInfo> GetLoginInfoAsync()
         {
-            var user = await BlobCache.Secure.GetLoginAsync();
-            return user;
-        }
-
-        public async Task<bool> LoginFromSession()
-        {
-            var tcs = new TaskCompletionSource<bool>();
-
-            var user = await GetLoginInfoAsync();
-            return true;
+            return await BlobCache.Secure.GetLoginAsync()
+                .Catch((Func<Exception, IObservable<LoginInfo>>)((e) =>
+                Observable.Return(new LoginInfo(string.Empty, string.Empty))));
         }
 
         public async Task<bool> LoginAsync(string uName, string pwd, bool fromCache = false)
@@ -70,15 +63,20 @@ namespace LunchPac
                 {
                     request.Content = new JsonContent(JsonConvert.SerializeObject(new LoginCredentials(uName, pwd)));
 
-                    var resp = await client.RequestAsync<LoginResponse>(request);
-
-                    if (resp.Data == null || !resp.Data.Success)
+                    try
                     {
-                        throw new Exception("Login Failed" + ((resp.Data != null && !string.IsNullOrEmpty(resp.Data.ErrorMessage)) ? "\n Error: " + resp.Data.ErrorMessage : string.Empty));
+                        var resp = await client.RequestAsync<LoginResponse>(request);
+                        if (resp.Data == null || !resp.Data.Success)
+                        {
+                            throw new Exception("Login Failed" + ((resp.Data != null && !string.IsNullOrEmpty(resp.Data.ErrorMessage)) ? "\n Error: " + resp.Data.ErrorMessage : string.Empty));
+                        }
+                        LoggedinUser = resp.Data.User;
+                        await BlobCache.Secure.SaveLogin(uName, pwd);
                     }
-
-                    LoggedinUser = resp.Data.User;
-                    await BlobCache.Secure.SaveLogin(uName, pwd, absoluteExpiration: DateTime.Today.AddHours(8));
+                    catch (NetworkException n)
+                    {
+                        throw new Exception("Login server is unreachable", n);
+                    }
 
                     return true;
                 }

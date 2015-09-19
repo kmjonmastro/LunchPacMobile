@@ -20,7 +20,12 @@ namespace LunchPac
             RestaurantViewModel.PreviousOrderSelected(item);
         }
 
-        void OnButtonClicked(object sender, EventArgs e)
+        void OnNewOrderClicked(object sender, EventArgs e)
+        {
+            RestaurantViewModel.NewOrderSelected();
+        }
+
+        void OnMenuClicked(object sender, EventArgs e)
         {
             RestaurantViewModel.MenuSelected();
         }

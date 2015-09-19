@@ -21,6 +21,11 @@ namespace LunchPac
         public bool Friday { get; set; }
 
         public string Menu { get; set; }
+
+        public string GetMenuUrl()
+        {
+            return Configuration.Routes.BaseUrl + Menu;
+        }
     }
 }
 

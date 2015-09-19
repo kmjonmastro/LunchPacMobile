@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace LunchPac
 {
@@ -7,16 +8,29 @@ namespace LunchPac
     {
         readonly INavigator Navigator;
         readonly LoginManager LoginManager;
+        readonly DomainManager DomainManager;
 
-        public LoginViewModel(INavigator navigator, LoginManager loginManager)
+        public LoginViewModel(INavigator navigator, LoginManager loginManager, DomainManager DomainManager)
         {
-            #if DEBUG
-            EmailAdress = "karim";
-            Password = "karim";
-            #endif
+//            #if DEBUG
+//            EmailAdress = "karim";
+//            Password = "karim";
+//            #endif
 
             Navigator = navigator;
             LoginManager = loginManager;
+            this.DomainManager = DomainManager;
+            InitializeFromCache();
+        }
+
+        async void InitializeFromCache()
+        {
+            var li = await LoginManager.GetLoginInfoAsync();
+            Device.BeginInvokeOnMainThread(() =>
+                {
+                    EmailAdress = li.UserName;
+                    Password = li.Password;
+                });
         }
 
         const string LoginSecureKey = "Session";
@@ -41,28 +55,34 @@ namespace LunchPac
 
         public bool LoginButtonEnabled { get { return _LoginButtonEnabled; } set { SetRaiseIfPropertyChanged(ref _LoginButtonEnabled, value); } }
 
-        public bool Login()
+        public void Login()
         {
             LoginButtonEnabled = false;
             LoginErrorVisible = false;
             try
             {
-                var res = Task.Run(async () =>
+                Task.Run(async () =>
                     {
-                        return await LoginManager.LoginAsync(EmailAdress, Password).ConfigureAwait(false);
+                        await LoginManager.LoginAsync(EmailAdress, Password).ConfigureAwait(false);
+
+                        try
+                        {
+                            await DomainManager.GetOrFetchRestaurantsAsync();
+                            await DomainManager.FetchHistory();
+                            await DomainManager.FetchOrderingStatus();
+
+                            Device.BeginInvokeOnMainThread(() => Navigator.PushAsync<LandingPageViewModel>());
+                        }
+                        catch (Exception e)
+                        {
+                            throw new Exception(e.Message, e);
+                        }
                     }).GetAwaiter().GetResult();
-                
-                if (res)
-                {
-                    Navigator.PushAsync<LandingPageViewModel>(); 
-                }
-                return true;
             }
             catch (Exception e)
             {
                 LoginError = e.Message;
                 LoginErrorVisible = true;
-                return false;
             }
             finally
             {

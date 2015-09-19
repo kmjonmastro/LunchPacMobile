@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="LunchPac.RestaurantPage">
-	<ContentPage.Content>
+<!--	<ContentPage.Content>
 		<StackLayout VerticalOptions="CenterAndExpand">
 			<Button Text="Menu" Clicked="OnButtonClicked"></Button> 
 			<Label Text="Previous Orders" />
@@ -12,5 +12,44 @@
 		    </ListView.ItemTemplate>
 		  </ListView>
 		</StackLayout>
+	</ContentPage.Content>-->
+	<ContentPage.Content Padding="0">
+		<Grid RowSpacing="0" ColumnSpacing="0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Grid.ColumnSpan="2">
+				<Label Text="Previous Orders" />
+					<ListView x:Name="OrdersListView" ItemSelected="OrderSelected" ItemsSource="{Binding PreviousOrders}">
+				    <ListView.ItemTemplate>
+				      <DataTemplate>
+				        <TextCell Text="{Binding OrderItem}" />
+				      </DataTemplate>
+				    </ListView.ItemTemplate>
+			  	</ListView>
+			</StackLayout>
+			<Button 
+				x:Name="MenuButton"
+				Grid.Row="1"
+				BackgroundColor="#3498DB"
+				BorderRadius="0"
+				TextColor="White" 
+				Clicked="OnMenuClicked"
+				Text="Menu"/>
+			<Button 
+				x:Name="OrderButton"
+				Grid.Row="1"
+				Grid.Column="1"
+				BackgroundColor="#81C134" 
+				BorderRadius="0"
+				TextColor="White"
+				Clicked="OnNewOrderClicked"
+				Text="New Order"/>
+		</Grid>
 	</ContentPage.Content>
 </ContentPage>

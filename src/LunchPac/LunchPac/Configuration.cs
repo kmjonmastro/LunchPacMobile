@@ -13,6 +13,12 @@ namespace LunchPac
             public const string LoginUrl = BaseUrl + "api/login";
 
             public const string RestaurantsUrl = BaseUrl + "api/restaurant";
+
+            public const string OrderhistoryUrl = BaseUrl + "api/orderhistory";
+
+            public const string Order = BaseUrl + "api/order";
+
+            public const string OrderingStatus = BaseUrl + "api/status";
         }
 
         public static class CacheKeys

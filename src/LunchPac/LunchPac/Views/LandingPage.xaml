@@ -6,17 +6,16 @@
        StringFormat='Today {0:dd/MM/yy}'}">
 	<ContentPage.Content>
 	<StackLayout VerticalOptions="Start">
-		<Label Text="Restaurants" />
-		<ListView x:Name="RestaurantListView" ItemSelected="RestaurantSelected" ItemsSource="{Binding Restaurants}">
-		    <ListView.ItemTemplate>
-		      <DataTemplate>
-		        <TextCell Text="{Binding RestaurantName}" />
-		      </DataTemplate>
-		    </ListView.ItemTemplate>
-		  </ListView>
-		  <Label Text="Current Order" />
-		<StackLayout>
-		</StackLayout>
+			<Label Text="Your Order" />
+			<ListView x:Name="RestaurantListView" ItemSelected="RestaurantSelected" ItemsSource="{Binding Restaurants}">
+			    <ListView.ItemTemplate>
+			      <DataTemplate>
+			        <TextCell Text="{Binding RestaurantName}" />
+			      </DataTemplate>
+			    </ListView.ItemTemplate>
+			  </ListView>
 	</StackLayout>
 	</ContentPage.Content>
 </ContentPage>
+
+
