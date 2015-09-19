@@ -30,6 +30,7 @@ namespace LunchPac
         protected override void ConfigureCore(ContainerBuilder builder)
         {
             builder.RegisterType<LoginManager>().AsSelf().SingleInstance();
+            builder.RegisterType<DomainManager>().AsSelf().SingleInstance();
 
             builder.RegisterType<LoginViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<LoginPage>().AsSelf().SingleInstance();

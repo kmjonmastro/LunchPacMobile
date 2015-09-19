@@ -5,9 +5,8 @@ using Mobile.Core;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Akavache;
-using System.Reactive.Linq;
-using System.Reactive;
 using System.Collections.Generic;
+using System.Reactive.Linq;
 
 namespace LunchPac
 {
@@ -26,6 +25,7 @@ namespace LunchPac
             public string Password { get; set; }
         }
 
+
         public class LoginResponse
         {
             public bool Success { get; set; }
@@ -35,59 +35,38 @@ namespace LunchPac
             public User User { get; set; }
         }
 
+        public static User LoggedinUser { get; private set; }
+
         public async Task DeleteToken()
         {
             try
             {
                 await BlobCache.Secure.EraseLogin();
             }
-            catch (KeyNotFoundException e)
+            catch (KeyNotFoundException)
             {
             }
         }
 
-        public Task<bool> LoginFromSession()
+        public async Task<LoginInfo> GetLoginInfoAsync()
+        {
+            var user = await BlobCache.Secure.GetLoginAsync();
+            return user;
+        }
+
+        public async Task<bool> LoginFromSession()
         {
             var tcs = new TaskCompletionSource<bool>();
 
-            try
-            {
-                BlobCache.Secure.GetLoginAsync().Subscribe((token) =>
-                    {
-                        if (token == null)
-                        {
-                            tcs.SetResult(false);
-                        }
-
-                        Task.Run(async () =>
-                            {
-                                try
-                                {
-                                    var res = await LoginAsync(token.UserName, token.Password, true);
-                                    tcs.SetResult(true);
-                                }
-                                catch (Exception)
-                                {
-                                    tcs.SetResult(false);
-                                }
-                            });
-                    });
-
-                return tcs.Task;
-            }
-            catch (Exception e)
-            {
-                tcs.SetResult(false);
-            }
-
-            return tcs.Task;
+            var user = await GetLoginInfoAsync();
+            return true;
         }
 
         public async Task<bool> LoginAsync(string uName, string pwd, bool fromCache = false)
         {
             using (var client = new HttpClient(new NativeMessageHandler()))
             {
-                using (var request = new HttpRequestMessage(HttpMethod.Post, Configuration.LoginUrl))
+                using (var request = new HttpRequestMessage(HttpMethod.Post, Configuration.Routes.LoginUrl))
                 {
                     request.Content = new JsonContent(JsonConvert.SerializeObject(new LoginCredentials(uName, pwd)));
 
@@ -98,6 +77,7 @@ namespace LunchPac
                         throw new Exception("Login Failed" + ((resp.Data != null && !string.IsNullOrEmpty(resp.Data.ErrorMessage)) ? "\n Error: " + resp.Data.ErrorMessage : string.Empty));
                     }
 
+                    LoggedinUser = resp.Data.User;
                     await BlobCache.Secure.SaveLogin(uName, pwd, absoluteExpiration: DateTime.Today.AddHours(8));
 
                     return true;

@@ -13,7 +13,6 @@ namespace LunchPac
         {
             InitializeComponent();
             LandingPageViewModel = landingPageViewModel;
-            BindingContext = LandingPageViewModel;
         }
 
         public void RestaurantSelected(object sender, EventArgs e)
