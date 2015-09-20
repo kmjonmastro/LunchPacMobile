@@ -27,6 +27,7 @@ namespace LunchPac
             // Handle when your app sleeps
             Task.Run(() =>
                 {
+                    LoginManager.LoggedinUser = null;
                     BlobCache.InMemory.InvalidateAll();
                     BlobCache.LocalMachine.InvalidateAll();
                 });
