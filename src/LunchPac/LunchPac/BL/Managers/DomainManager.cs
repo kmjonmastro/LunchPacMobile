@@ -46,7 +46,7 @@ namespace LunchPac
         {
             try
             {
-                return await BlobCache.LocalMachine.GetOrFetchObject < List<Restaurant>>(
+                return await BlobCache.InMemory.GetOrFetchObject < List<Restaurant>>(
                     Configuration.CacheKeys.Restaurants, 
                     async () => await FetchRestaurants().ConfigureAwait(false),
                     DateTimeOffset.UtcNow.AddDays(-1).Date
@@ -63,28 +63,6 @@ namespace LunchPac
             var orders = await GetHistory();
             return orders.FirstOrDefault(o => o.AddDate.ToLocalTime().Date == DateTime.Today.Date);
         }
-
-        //        public async Task UpsertOrderAsync(Order order)
-        //        {
-        //            using (var client = new HttpClient(new NativeMessageHandler()))
-        //            {
-        //                using (var req = new HttpRequestMessage(HttpMethod.Get, Configuration.Routes.BaseUrl + "?user=" + LoginManager.LoggedinUser.UserId))
-        //                {
-        //                    try
-        //                    {
-        //                        var res = await client.RequestAsync<List<Order>>(req);
-        //                        BlobCache.InMemory.InsertObject<List<Order>>(Configuration.CacheKeys.OrderHistory, res.Data);
-        //                        return res.Data;
-        //                    }
-        //                    catch (Exception e)
-        //                    {
-        //                        throw new Exception("Unable to fetch history Error:" + e.FullMessage(), e);
-        //                    }
-        //                }
-        //            }
-        //
-        //            await BlobCache.InMemory.InsertObject(Configuration.CacheKeys.OrderHistory, orders);
-        //        }
 
         public async Task<List<Order>> GetHistory()
         {
@@ -132,7 +110,7 @@ namespace LunchPac
                     try
                     {
                         var res = await client.RequestAsync<List<Order>>(req);
-                        BlobCache.InMemory.InsertObject<List<Order>>(Configuration.CacheKeys.OrderHistory, res.Data);
+                        await BlobCache.InMemory.InsertObject<List<Order>>(Configuration.CacheKeys.OrderHistory, res.Data);
                         return res.Data;
                     }
                     catch (Exception e)
@@ -146,6 +124,44 @@ namespace LunchPac
         public class OrderCreatedDTO
         {
             public int OrderId { get; set; }
+        }
+
+        public async Task DeleteOrder(Order order)
+        {
+            var status = await FetchOrderingStatus();
+
+            if (status.Closed)
+            {
+                throw new Exception("Lunch ordering is closed :(.\nPlease contact the responsible team directly.");
+            }
+                
+            #if DEBUG
+            throw new Exception("Not Available in Debug Mode");
+            #endif
+
+            using (var client = new HttpClient(new NativeMessageHandler()))
+            {
+                using (var req = new HttpRequestMessage(HttpMethod.Delete, Configuration.Routes.Order))
+                {
+                    try
+                    {
+                        req.Content = new JsonContent(JsonConvert.SerializeObject(new {order.OrderId}));
+                        await client.RequestAsync(req);
+                      
+                        var history = await GetHistory();
+                        history.RemoveAll(o => o.OrderId == order.OrderId);
+                        await BlobCache.InMemory.InsertObject<List<Order>>(Configuration.CacheKeys.OrderHistory, history);
+                    }
+                    catch (NetworkException e)
+                    {
+                        throw new Exception("You must be online.", e);
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception("Failed to delete order. Error:" + e.FullMessage(), e);
+                    }
+                }
+            }
         }
 
         public async Task UpsertOrder(Order order)
@@ -198,7 +214,7 @@ namespace LunchPac
                     }
                     catch (Exception e)
                     {
-                        throw new Exception("Unable to create order." + e.FullMessage(), e);
+                        throw new Exception("Unable to create order. Error:" + e.FullMessage(), e);
                     }
                 }
             }

@@ -29,11 +29,19 @@ namespace LunchPac
 
         bool _submitButtonEnabled = true;
 
-        bool SubmitButtonEnabled { get { return _submitButtonEnabled; } set { SetRaiseIfPropertyChanged(ref _submitButtonEnabled, value); } }
+        public  bool SubmitButtonEnabled { get { return _submitButtonEnabled; } set { SetRaiseIfPropertyChanged(ref _submitButtonEnabled, value); } }
 
         string _submitButtontext;
 
-        string SubmitButtonText { get { return _submitButtontext; } set { SetRaiseIfPropertyChanged(ref _submitButtontext, value); } }
+        public string SubmitButtonText { get { return _submitButtontext; } set { SetRaiseIfPropertyChanged(ref _submitButtontext, value); } }
+
+        bool _deleteButtonEnabled = false;
+
+        public bool DeleteButtonEnabled { get { return _deleteButtonEnabled; } set { SetRaiseIfPropertyChanged(ref _deleteButtonEnabled, value); } }
+
+        bool _deleteButtonVisible = false;
+
+        public bool DeleteButtonVisible { get { return _deleteButtonVisible; } set { SetRaiseIfPropertyChanged(ref _deleteButtonVisible, value); } }
 
         readonly INavigator Navigator;
         readonly DomainManager DomainManager;
@@ -62,6 +70,38 @@ namespace LunchPac
             OrderComments = Order.OrderComments ?? string.Empty;
             SubmitButtonEnabled = DomainManager.OrderingStatusOpen;
             SubmitButtonText = Order.OrderId.HasValue ? "Update" : "Create";
+            DeleteButtonEnabled = Order.OrderId.HasValue;
+            DeleteButtonVisible = Order.OrderId.HasValue;
+        }
+
+        public void CancelOrder()
+        {
+            SubmitButtonEnabled = false;
+            Order.Soup = Soup;
+            Order.OrderComments = OrderComments;
+            Order.OrderItem = OrderItem;
+            DeleteButtonEnabled = false;
+
+            Task.Run(async () =>
+                {
+                    Exception ex = null;
+                    try
+                    {
+                        await DomainManager.DeleteOrder(Order);
+                    }
+                    catch (Exception e)
+                    {
+                        ex = e;
+                    }
+                    finally
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                            {
+                                ResetFields();
+                                Application.Current.MainPage.DisplayAlert("Oh Snap :(", ex.Message, "OK");
+                            });
+                    }
+                });
         }
 
         public void ValidateAndSubmit()

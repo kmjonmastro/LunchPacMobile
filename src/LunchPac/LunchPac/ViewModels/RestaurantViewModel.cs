@@ -93,6 +93,12 @@ namespace LunchPac
                 });
         }
 
+        public void Refresh()
+        {
+            if (Restaurant != null)
+                SetRestaurant(Restaurant);
+        }
+
         public void OrderButtonClicked()
         {
             if (ExistingOrder != null && ExistingOrder.RestaurantId != Restaurant.RestaurantId)

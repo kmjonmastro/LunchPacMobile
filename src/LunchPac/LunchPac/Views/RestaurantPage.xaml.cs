@@ -13,6 +13,12 @@ namespace LunchPac
             BindingContext = RestaurantViewModel = restVm;
         }
 
+        protected override void OnAppearing()
+        {
+            RestaurantViewModel.Refresh();
+            base.OnAppearing();
+        }
+
         void OnOrderButtonClicked(object sender, EventArgs e)
         {
             RestaurantViewModel.OrderButtonClicked();

@@ -11,9 +11,16 @@
 		        </TableSection>
 		    </TableRoot>
 		</TableView>
-		<Button Text="Submit" Clicked="SubmitClicked" BackgroundColor="#81C134"
-				BorderRadius="0" VerticalOptions="StartAndExpand" FontAttributes="Bold"
-				TextColor="White" IsEnabled="{Binding SubmitButtonEnabled}"/>
+		<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="0" VerticalOptions="FillAndExpand">
+			
+			<Button Text="Delete" Clicked="DeleteClicked" BackgroundColor="#ED8413" HorizontalOptions="FillAndExpand"
+					BorderRadius="0" VerticalOptions="StartAndExpand" FontAttributes="Bold"
+					TextColor="White" IsEnabled="{Binding DeleteButtonEnabled}" IsVisible="{Binding DeleteButtonVisible}"/>
+
+			<Button Text="Place" Clicked="SubmitClicked" BackgroundColor="#81C134" HorizontalOptions="FillAndExpand"
+					BorderRadius="0" VerticalOptions="StartAndExpand" FontAttributes="Bold"
+					TextColor="White" IsEnabled="{Binding SubmitButtonEnabled}" />
+		</StackLayout>
 	</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Akavache;
 using System.Collections.Generic;
 using System.Reactive.Linq;
+using Xamarin.Forms;
 
 namespace LunchPac
 {
@@ -43,16 +44,33 @@ namespace LunchPac
             {
                 await BlobCache.Secure.EraseLogin();
             }
-            catch (KeyNotFoundException)
+            catch (Exception)
             {
             }
         }
 
         public async Task<LoginInfo> GetLoginInfoAsync()
         {
-            return await BlobCache.Secure.GetLoginAsync()
-                .Catch((Func<Exception, IObservable<LoginInfo>>)((e) =>
-                Observable.Return(new LoginInfo(string.Empty, string.Empty))));
+            bool errored = false;
+            var loginInfor = new LoginInfo("", "");
+            try
+            {
+                //TODO: Firgure out why this does not work or errors out
+//                loginInfor = await BlobCache.Secure.GetLoginAsync()
+//                    .Catch((Func<KeyNotFoundException, IObservable<LoginInfo>>)((e) =>
+//                        Observable.Return(new LoginInfo(string.Empty, string.Empty))));
+            }
+            catch (KeyNotFoundException)
+            {
+                errored = true;
+            }
+
+            if (errored)
+            {
+                await DeleteToken();
+            }
+
+            return loginInfor;
         }
 
         public async Task<bool> LoginAsync(string uName, string pwd, bool fromCache = false)

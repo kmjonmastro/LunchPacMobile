@@ -18,6 +18,7 @@ namespace LunchPac
         {
             //Init Cache
             BlobCache.ApplicationName = Configuration.DbName;
+//            BlobCache.EnsureInitialized();
 
             // set main page
             var viewFactory = container.Resolve<IViewFactory>();

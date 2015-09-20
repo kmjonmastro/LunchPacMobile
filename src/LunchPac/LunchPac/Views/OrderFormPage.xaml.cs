@@ -19,6 +19,11 @@ namespace LunchPac
         {
             OrderFormViewModel.ValidateAndSubmit();
         }
+
+        void DeleteClicked(object sender, EventArgs e)
+        {
+            OrderFormViewModel.CancelOrder();
+        }
     }
 }
 
