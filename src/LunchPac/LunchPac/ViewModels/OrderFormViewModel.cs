@@ -45,14 +45,16 @@ namespace LunchPac
 
         readonly INavigator Navigator;
         readonly DomainManager DomainManager;
+        readonly RestaurantViewModel RestaurantViewModel;
 
         Order Order { get; set; }
 
-        public OrderFormViewModel(INavigator navigator, DomainManager domainManager)
+        public OrderFormViewModel(INavigator navigator, DomainManager domainManager, RestaurantViewModel RestaurantViewModel)
         {
             Title = "My Order";
             Navigator = navigator;
             DomainManager = domainManager;
+            this.RestaurantViewModel = RestaurantViewModel;
             SubmitButtonEnabled = DomainManager.OrderingStatusOpen;
         }
 
@@ -99,6 +101,10 @@ namespace LunchPac
                             {
                                 ResetFields();
                                 Application.Current.MainPage.DisplayAlert("Oh Snap :(", ex.Message, "OK");
+                                if (ex != null)
+                                {
+                                    RestaurantViewModel.Refresh();
+                                } 
                             });
                     }
                 });
@@ -130,6 +136,10 @@ namespace LunchPac
                                 var title = ex != null ? "Oh Snap :(" : "Yesss!";
                                 var message = ex != null ? ex.Message : "Your order has been submited!";
                                 Application.Current.MainPage.DisplayAlert(title, message, "OK");
+                                if (ex != null)
+                                {
+                                    RestaurantViewModel.Refresh();
+                                } 
                             });
                     }
                 });

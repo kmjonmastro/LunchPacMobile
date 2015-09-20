@@ -10,14 +10,15 @@ namespace LunchPac
         readonly INavigator Navigator;
         readonly LoginManager LoginManager;
         readonly DomainManager DomainManager;
+        readonly LandingPageViewModel LPVM;
 
-        public LoginViewModel(INavigator navigator, LoginManager loginManager, DomainManager DomainManager)
+        public LoginViewModel(INavigator navigator, LoginManager loginManager, DomainManager DomainManager, LandingPageViewModel lPVM)
         {
 //            #if DEBUG
 //            EmailAdress = "karim";
 //            Password = "karim";
 //            #endif
-
+            LPVM = lPVM;
             Navigator = navigator;
             LoginManager = loginManager;
             this.DomainManager = DomainManager;
@@ -72,7 +73,12 @@ namespace LunchPac
                             await DomainManager.FetchHistory();
                             await DomainManager.FetchOrderingStatus();
 
-                            Device.BeginInvokeOnMainThread(() => Navigator.PopModalAsync());
+//                            var vm = await Navigator.PopModalAsync().ConfigureAwait(false);
+                            Device.BeginInvokeOnMainThread(() =>
+                                {
+                                    Navigator.PopModalAsync().ConfigureAwait(false);
+                                    LPVM.Refresh();
+                                });
                         }
                         catch (Exception e)
                         {

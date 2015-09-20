@@ -25,30 +25,35 @@ namespace LunchPac
         {
             this.DomainManager = DomainManager;
             this.Navigator = Navigator;
+            Refresh();
         }
 
-        public void OnAppearing()
+        public async void Refresh()
         {
-            DomainManager.GetOrFetchRestaurantsAsync().ContinueWith((t) =>
-                {
-                    Device.BeginInvokeOnMainThread(() =>
+            try
+            {
+                var list = await DomainManager.GetOrFetchRestaurantsAsync().ConfigureAwait(false);
+                Device.BeginInvokeOnMainThread(() =>
+                    {
+                        if (LoginManager.LoggedinUser == null)
                         {
-                            if (LoginManager.LoggedinUser == null)
-                            {
-                                Navigator.PushModalAsync<LoginViewModel>();
-                                return;
-                            }
-                            if (t.Result != null)
-                                Restaurants = new ObservableCollection<Restaurant>(t.Result);
-                            #if DEBUG
-                            if (t.Result == null)
-                            {
-                                const string json = "[{\"restaurantId\":22,\"restaurantName\":\"Muscle Maker Grill\",\"monday\":false,\"tuesday\":false,\"wednesday\":true,\"thursday\":false,\"friday\":false,\"menu\":\"MuscleMakerGrill.asp\"},{\"restaurantId\":11,\"restaurantName\":\"Surf Taco\",\"monday\":false,\"tuesday\":false,\"wednesday\":true,\"thursday\":false,\"friday\":false,\"menu\":\"SurfTaco.asp\"}]";
-                                Restaurants = new ObservableCollection<Restaurant>(JsonConvert.DeserializeObject<List<Restaurant>>(json));
-                            }
-                            #endif 
-                        });
-                }, TaskScheduler.FromCurrentSynchronizationContext());
+                            Navigator.PushModalAsync<LoginViewModel>();
+                            return;
+                        }
+                        if (list != null)
+                            Restaurants = new ObservableCollection<Restaurant>(list);
+                        #if DEBUG
+                        if (list == null)
+                        {
+                            const string json = "[{\"restaurantId\":22,\"restaurantName\":\"Muscle Maker Grill\",\"monday\":false,\"tuesday\":false,\"wednesday\":true,\"thursday\":false,\"friday\":false,\"menu\":\"MuscleMakerGrill.asp\"},{\"restaurantId\":11,\"restaurantName\":\"Surf Taco\",\"monday\":false,\"tuesday\":false,\"wednesday\":true,\"thursday\":false,\"friday\":false,\"menu\":\"SurfTaco.asp\"}]";
+                            Restaurants = new ObservableCollection<Restaurant>(JsonConvert.DeserializeObject<List<Restaurant>>(json));
+                        }
+                        #endif 
+                    });
+            }
+            catch (Exception e)
+            {
+            }
         }
 
         public void HandleRestaurantSelected(Restaurant rest)

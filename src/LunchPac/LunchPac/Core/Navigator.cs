@@ -28,7 +28,7 @@ namespace LunchPac
 
         public async Task<IViewModel> PopModalAsync()
         {
-            Page view = await Navigation.PopModalAsync();
+            Page view = await Navigation.PopModalAsync().ConfigureAwait(false);
             return view.BindingContext as IViewModel;
         }
 

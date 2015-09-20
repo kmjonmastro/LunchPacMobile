@@ -11,8 +11,7 @@
 		        </TableSection>
 		    </TableRoot>
 		</TableView>
-		<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="0" VerticalOptions="FillAndExpand">
-			
+		<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="0" VerticalOptions="EndAndExpand">
 			<Button Text="Delete" Clicked="DeleteClicked" BackgroundColor="#ED8413" HorizontalOptions="FillAndExpand"
 					BorderRadius="0" VerticalOptions="StartAndExpand" FontAttributes="Bold"
 					TextColor="White" IsEnabled="{Binding DeleteButtonEnabled}" IsVisible="{Binding DeleteButtonVisible}"/>
