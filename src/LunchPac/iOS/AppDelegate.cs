@@ -21,7 +21,31 @@ namespace LunchPac.iOS
 
             LoadApplication(new App(new iOSModule()));
 
+            SetGeneralStyles();
+
             return base.FinishedLaunching(app, options);
+        }
+
+        public static void SetGeneralStyles()
+        {
+            var blueColor = UIColor.FromRGB(17, 38, 129);
+            var titletextAttr = UINavigationBar.Appearance.GetTitleTextAttributes();
+            titletextAttr.TextColor = blueColor;
+//            titletextAttr.Font = UIFont.SystemFontOfSize(18);
+            UINavigationBar.Appearance.TintColor = blueColor;
+            UINavigationBar.Appearance.SetTitleTextAttributes(titletextAttr);
+        }
+    }
+
+    public static class UIColorExtensions
+    {
+        public static UIColor FromHex(this UIColor color, int hexValue)
+        {
+            return UIColor.FromRGB(
+                (((float)((hexValue & 0xFF0000) >> 16)) / 255.0f),
+                (((float)((hexValue & 0xFF00) >> 8)) / 255.0f),
+                (((float)(hexValue & 0xFF)) / 255.0f)
+            );
         }
     }
 }

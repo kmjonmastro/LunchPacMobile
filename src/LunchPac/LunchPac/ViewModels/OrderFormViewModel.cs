@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace LunchPac
 {
@@ -26,11 +27,72 @@ namespace LunchPac
 
         public string OrderComments { get { return _OrderComments; } set { SetRaiseIfPropertyChanged(ref _OrderComments, value); } }
 
-        readonly INavigator Navigator;
+        bool _submitButtonEnabled = true;
 
-        public OrderFormViewModel(INavigator navigator)
+        bool SubmitButtonEnabled { get { return _submitButtonEnabled; } set { SetRaiseIfPropertyChanged(ref _submitButtonEnabled, value); } }
+
+        string _submitButtontext;
+
+        string SubmitButtonText { get { return _submitButtontext; } set { SetRaiseIfPropertyChanged(ref _submitButtontext, value); } }
+
+        readonly INavigator Navigator;
+        readonly DomainManager DomainManager;
+
+        Order Order { get; set; }
+
+        public OrderFormViewModel(INavigator navigator, DomainManager domainManager)
         {
+            Title = "My Order";
             Navigator = navigator;
+            DomainManager = domainManager;
+            SubmitButtonEnabled = DomainManager.OrderingStatusOpen;
+        }
+
+        public void SetOrder(Order order)
+        {
+            Order = order;
+
+            ResetFields();
+        }
+
+        void ResetFields()
+        {
+            Soup = Order.Soup ?? string.Empty;
+            OrderItem = Order.OrderItem ?? string.Empty;
+            OrderComments = Order.OrderComments ?? string.Empty;
+            SubmitButtonEnabled = DomainManager.OrderingStatusOpen;
+            SubmitButtonText = Order.OrderId.HasValue ? "Update" : "Create";
+        }
+
+        public void ValidateAndSubmit()
+        {
+            SubmitButtonEnabled = false;
+            Order.Soup = Soup;
+            Order.OrderComments = OrderComments;
+            Order.OrderItem = OrderItem;
+
+            Task.Run(async () =>
+                {
+                    Exception ex = null;
+                    try
+                    {
+                        await DomainManager.UpsertOrder(Order);
+                    }
+                    catch (Exception e)
+                    {
+                        ex = e;
+                    }
+                    finally
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                            {
+                                ResetFields();
+                                var title = ex != null ? "Oh Snap :(" : "Yesss!";
+                                var message = ex != null ? ex.Message : "Your order has been submited!";
+                                Application.Current.MainPage.DisplayAlert(title, message, "OK");
+                            });
+                    }
+                });
         }
     }
 }

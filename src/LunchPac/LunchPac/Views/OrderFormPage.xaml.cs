@@ -7,9 +7,17 @@ namespace LunchPac
 {
     public partial class OrderFormPage : ContentPage
     {
-        public OrderFormPage()
+        readonly OrderFormViewModel OrderFormViewModel;
+
+        public OrderFormPage(OrderFormViewModel vm)
         {
+            OrderFormViewModel = vm;
             InitializeComponent();
+        }
+
+        void SubmitClicked(object sender, EventArgs e)
+        {
+            OrderFormViewModel.ValidateAndSubmit();
         }
     }
 }

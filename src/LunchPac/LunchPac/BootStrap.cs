@@ -22,7 +22,7 @@ namespace LunchPac
             // set main page
             var viewFactory = container.Resolve<IViewFactory>();
             Page mainPage; 
-            mainPage = viewFactory.Resolve<LoginViewModel>();
+            mainPage = viewFactory.Resolve<LandingPageViewModel>();
             var navigationPage = new NavigationPage(mainPage);
             _application.MainPage = navigationPage;
         }

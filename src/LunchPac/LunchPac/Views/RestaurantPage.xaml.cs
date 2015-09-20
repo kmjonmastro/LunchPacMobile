@@ -13,21 +13,9 @@ namespace LunchPac
             BindingContext = RestaurantViewModel = restVm;
         }
 
-        void OrderSelected(object sender, EventArgs e)
+        void OnOrderButtonClicked(object sender, EventArgs e)
         {
-            var item = ((ListView)sender).SelectedItem as Order;
-            ((ListView)sender).SelectedItem = null;
-            RestaurantViewModel.PreviousOrderSelected(item);
-        }
-
-        void OnNewOrderClicked(object sender, EventArgs e)
-        {
-            RestaurantViewModel.NewOrderSelected();
-        }
-
-        void OnMenuClicked(object sender, EventArgs e)
-        {
-            RestaurantViewModel.MenuSelected();
+            RestaurantViewModel.OrderButtonClicked();
         }
     }
 }

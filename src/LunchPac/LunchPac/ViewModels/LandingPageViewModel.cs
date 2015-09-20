@@ -33,6 +33,11 @@ namespace LunchPac
                 {
                     Device.BeginInvokeOnMainThread(() =>
                         {
+                            if (LoginManager.LoggedinUser == null)
+                            {
+                                Navigator.PushModalAsync<LoginViewModel>();
+                                return;
+                            }
                             if (t.Result != null)
                                 Restaurants = new ObservableCollection<Restaurant>(t.Result);
                             #if DEBUG

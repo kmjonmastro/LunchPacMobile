@@ -16,7 +16,7 @@ namespace LunchPac
 {
     public class DomainManager
     {
-        public bool OrderingStatus = false;
+        public bool OrderingStatusOpen = false;
 
         public DomainManager()
         {
@@ -101,7 +101,7 @@ namespace LunchPac
             return history;
         }
 
-        public async Task FetchOrderingStatus()
+        public async Task<OrderStatus> FetchOrderingStatus()
         {
             var date = WebUtility.UrlEncode(DateTime.UtcNow.ToString("s"));
 
@@ -112,7 +112,8 @@ namespace LunchPac
                     try
                     {
                         var resp = await client.RequestAsync<OrderStatus>(req);
-                        OrderingStatus = resp.Data.Closed;
+                        OrderingStatusOpen = !resp.Data.Closed;
+                        return resp.Data;
                     }
                     catch (Exception e)
                     {
@@ -137,6 +138,67 @@ namespace LunchPac
                     catch (Exception e)
                     {
                         throw new Exception("Unable to fetch history Error:" + e.FullMessage(), e);
+                    }
+                }
+            }
+        }
+
+        public class OrderCreatedDTO
+        {
+            public int OrderId { get; set; }
+        }
+
+        public async Task UpsertOrder(Order order)
+        {
+            if (string.IsNullOrEmpty(order.OrderItem) && string.IsNullOrEmpty(order.Soup) && string.IsNullOrEmpty(order.OrderComments))
+            {
+                throw new Exception("You must fill at least one field.");
+            }
+                
+            var status = await FetchOrderingStatus();
+
+            if (status.Closed)
+            {
+                throw new Exception("Lunch ordering is closed :(.\nPlease contact the responsible team directly.");
+            }
+
+            order.AddDate = DateTime.UtcNow;
+            order.UserId = LoginManager.LoggedinUser.UserId;
+
+            #if DEBUG
+            throw new Exception("Not Available in Debug Mode");
+            #endif
+
+            using (var client = new HttpClient(new NativeMessageHandler()))
+            {
+                var method = order.OrderId.HasValue ? HttpMethod.Put : HttpMethod.Post;
+                using (var req = new HttpRequestMessage(method, Configuration.Routes.Order))
+                {
+                    try
+                    {
+                        req.Content = new JsonContent(JsonConvert.SerializeObject(order));
+                        if (order.OrderId.HasValue)
+                        {
+                            await client.RequestAsync(req);
+                        }
+                        else
+                        {
+                            var res = await client.RequestAsync<OrderCreatedDTO>(req);
+                            order.OrderId = res.Data.OrderId;
+                        }
+
+                        var history = await GetHistory();
+                        history.RemoveAll(o => o.OrderId == order.OrderId);
+                        history.Add(order);
+                        await BlobCache.InMemory.InsertObject<List<Order>>(Configuration.CacheKeys.OrderHistory, history);
+                    }
+                    catch (NetworkException e)
+                    {
+                        throw new Exception("You must be online.", e);
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception("Unable to create order." + e.FullMessage(), e);
                     }
                 }
             }

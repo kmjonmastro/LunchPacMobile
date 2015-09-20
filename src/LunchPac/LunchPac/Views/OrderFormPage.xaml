@@ -1,13 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="LunchPac.OrderFormPage">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="LunchPac.OrderFormPage" Title="{Binding Title}">
 	<ContentPage.Content>
-	<TableView Intent="Settings">
-	    <TableRoot>
-	        <TableSection Title="Ring">
-	            <SwitchCell Text="New Voice Mail" />
-	      		<SwitchCell Text="New Mail" On="true" />
-	        </TableSection>
-	    </TableRoot>
-	</TableView>
+	<StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Spacing="0">
+		<TableView Intent="Form" >
+		    <TableRoot>
+		        <TableSection Title="Do not exceed $10 limit">
+		            <EntryCell Text="{Binding OrderItem}" Label="Item" Keyboard="Text" Placeholder="Item name or number.."/>
+		            <EntryCell Text="{Binding Soup}" Label="Soup" Keyboard="Text" Placeholder="Soup choice.."/>
+	            	<EntryCell Text="{Binding OrderComments}" Label="Extras" Keyboard="Text" Placeholder="Any extras.."/>
+		        </TableSection>
+		    </TableRoot>
+		</TableView>
+		<Button Text="Submit" Clicked="SubmitClicked" BackgroundColor="#81C134"
+				BorderRadius="0" VerticalOptions="StartAndExpand" FontAttributes="Bold"
+				TextColor="White" IsEnabled="{Binding SubmitButtonEnabled}"/>
+	</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

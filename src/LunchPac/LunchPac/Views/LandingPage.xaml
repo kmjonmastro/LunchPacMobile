@@ -6,11 +6,10 @@
        StringFormat='Today {0:dd/MM/yy}'}">
 	<ContentPage.Content>
 	<StackLayout VerticalOptions="Start">
-			<Label Text="Your Order" />
 			<ListView x:Name="RestaurantListView" ItemSelected="RestaurantSelected" ItemsSource="{Binding Restaurants}">
 			    <ListView.ItemTemplate>
 			      <DataTemplate>
-			        <TextCell Text="{Binding RestaurantName}" />
+			        <TextCell Text="{Binding RestaurantName}" TextColor="#2C3E50"/>
 			      </DataTemplate>
 			    </ListView.ItemTemplate>
 			  </ListView>

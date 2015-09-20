@@ -71,7 +71,7 @@ namespace LunchPac
                             await DomainManager.FetchHistory();
                             await DomainManager.FetchOrderingStatus();
 
-                            Device.BeginInvokeOnMainThread(() => Navigator.PushAsync<LandingPageViewModel>());
+                            Device.BeginInvokeOnMainThread(() => Navigator.PopModalAsync());
                         }
                         catch (Exception e)
                         {
