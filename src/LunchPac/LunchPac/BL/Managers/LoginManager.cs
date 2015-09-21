@@ -52,13 +52,13 @@ namespace LunchPac
         public async Task<LoginInfo> GetLoginInfoAsync()
         {
             bool errored = false;
-            var loginInfor = new LoginInfo("", "");
+            var loginInfo = new LoginInfo("", "");
             try
             {
                 //TODO: Firgure out why this does not work or errors out
-//                loginInfor = await BlobCache.Secure.GetLoginAsync()
-//                    .Catch((Func<KeyNotFoundException, IObservable<LoginInfo>>)((e) =>
-//                        Observable.Return(new LoginInfo(string.Empty, string.Empty))));
+                loginInfo = await BlobCache.Secure.GetLoginAsync()
+                    .Catch((Func<KeyNotFoundException, IObservable<LoginInfo>>)((e) =>
+                        Observable.Return(new LoginInfo(string.Empty, string.Empty))));
             }
             catch (KeyNotFoundException)
             {
@@ -70,7 +70,7 @@ namespace LunchPac
                 await DeleteToken();
             }
 
-            return loginInfor;
+            return loginInfo;
         }
 
         public async Task<bool> LoginAsync(string uName, string pwd, bool fromCache = false)
