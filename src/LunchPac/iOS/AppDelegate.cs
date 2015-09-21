@@ -31,7 +31,6 @@ namespace LunchPac.iOS
             var blueColor = UIColor.FromRGB(17, 38, 129);
             var titletextAttr = UINavigationBar.Appearance.GetTitleTextAttributes();
             titletextAttr.TextColor = blueColor;
-//            titletextAttr.Font = UIFont.SystemFontOfSize(18);
             UINavigationBar.Appearance.TintColor = blueColor;
             UINavigationBar.Appearance.SetTitleTextAttributes(titletextAttr);
         }

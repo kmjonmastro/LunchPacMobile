@@ -47,14 +47,53 @@ namespace LunchPac.Droid
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f040002
-			public const int accent = 2130968578;
+			// aapt resource value: 0x7f040004
+			public const int WWDarkBlue = 2130968580;
 			
-			// aapt resource value: 0x7f040000
-			public const int primary = 2130968576;
+			// aapt resource value: 0x7f040007
+			public const int WWLightBlue = 2130968583;
+			
+			// aapt resource value: 0x7f040006
+			public const int WWLightMedBlue = 2130968582;
+			
+			// aapt resource value: 0x7f040005
+			public const int WWMedDarkBlue = 2130968581;
+			
+			// aapt resource value: 0x7f040003
+			public const int accent = 2130968579;
+			
+			// aapt resource value: 0x7f04000f
+			public const int canceled = 2130968591;
+			
+			// aapt resource value: 0x7f04000e
+			public const int completed = 2130968590;
+			
+			// aapt resource value: 0x7f040008
+			public const int darkgraycolor = 2130968584;
+			
+			// aapt resource value: 0x7f04000b
+			public const int in_progress = 2130968587;
+			
+			// aapt resource value: 0x7f040009
+			public const int lightgray = 2130968585;
+			
+			// aapt resource value: 0x7f04000d
+			public const int not_started = 2130968589;
 			
 			// aapt resource value: 0x7f040001
-			public const int primary_dark = 2130968577;
+			public const int primary = 2130968577;
+			
+			// aapt resource value: 0x7f040002
+			public const int primary_dark = 2130968578;
+			
+			// aapt resource value: 0x7f040000
+			public const int txt_field_bg = 2130968576;
+			
+			// aapt resource value: 0x7f04000c
+			public const int unscheduled = 2130968588;
+			
+			// aapt resource value: 0x7f04000a
+			public const int white = 2130968586;
 			
 			static Color()
 			{
@@ -73,7 +112,7 @@ namespace LunchPac.Droid
 			public const int icon = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int workwavelunchpac680 = 2130837505;
+			public const int logowhite = 2130837505;
 			
 			static Drawable()
 			{
@@ -109,6 +148,9 @@ namespace LunchPac.Droid
 		
 		public partial class Style
 		{
+			
+			// aapt resource value: 0x7f050004
+			public const int App_EditTextStyle = 2131034116;
 			
 			// aapt resource value: 0x7f050001
 			public const int MyTheme = 2131034113;

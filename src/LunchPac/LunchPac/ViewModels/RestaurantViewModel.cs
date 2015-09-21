@@ -84,7 +84,7 @@ namespace LunchPac
                             {
                                 OrderButtonText = NewOrderTxt;
                                 OrderButtonColor = Color.FromHex(NewOrderButtonColor);
-                                CurrentOrder = new Order();
+                                CurrentOrder = new Order() { RestaurantId = this.Restaurant.RestaurantId };
                             }
                                 
                             PreviousOrders = new ObservableCollection<Order>(filtered);

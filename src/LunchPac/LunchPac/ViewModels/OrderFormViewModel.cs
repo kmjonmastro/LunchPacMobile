@@ -97,14 +97,20 @@ namespace LunchPac
                     }
                     finally
                     {
+                        var title = ex != null ? "Oh Snap :(" : "Yesss!";
+                        var message = ex != null ? ex.Message : "Your order has been Deleted!";                      
+
                         Device.BeginInvokeOnMainThread(() =>
                             {
-                                ResetFields();
-                                Application.Current.MainPage.DisplayAlert("Oh Snap :(", ex.Message, "OK");
-                                if (ex != null)
-                                {
-                                    RestaurantViewModel.Refresh();
-                                } 
+                                Application.Current.MainPage.DisplayAlert(title, message, "OK").ContinueWith((t) =>
+                                    {
+                                        ResetFields();
+                                        if (ex == null)
+                                        {
+                                            Navigator.PopAsync();
+                                            RestaurantViewModel.Refresh();
+                                        }
+                                    }, TaskScheduler.FromCurrentSynchronizationContext());  
                             });
                     }
                 });

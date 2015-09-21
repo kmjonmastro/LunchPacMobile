@@ -132,10 +132,7 @@
     <BundleResource Include="Resources\Icon-Small-40.png" />
     <BundleResource Include="Resources\Icon-Small-40%402x.png" />
     <BundleResource Include="Resources\Icon-Small-40%403x.png" />
-    <BundleResource Include="Resources\workwavelunchpac680.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
+    <BundleResource Include="Resources\logowhite.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -147,6 +144,7 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="AkavacheSqliteLinkerOverride.cs" />
     <Compile Include="iOSModule.cs" />
+    <Compile Include="StyledEntryRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="ITunesArtwork" />
@@ -160,5 +158,8 @@
       <Project>{19E04417-9028-408A-8AC5-8E0ED0353FA5}</Project>
       <Name>LunchPac</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
   </ItemGroup>
 </Project>

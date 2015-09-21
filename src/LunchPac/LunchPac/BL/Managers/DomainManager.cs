@@ -24,10 +24,9 @@ namespace LunchPac
 
         async Task<List<Restaurant>> FetchRestaurants()
         {
-            var date = WebUtility.UrlEncode(DateTime.UtcNow.ToString("MM-dd-yyyy"));
             using (var client = new HttpClient(new NativeMessageHandler()))
             {
-                using (var req = new HttpRequestMessage(HttpMethod.Get, Configuration.Routes.RestaurantsUrl + "?date=" + date))
+                using (var req = new HttpRequestMessage(HttpMethod.Get, Configuration.Routes.RestaurantsUrl + "?date=" + WebUtility.UrlEncode(DateTime.UtcNow.ToISOString())))
                 {
                     try
                     {
@@ -81,16 +80,17 @@ namespace LunchPac
 
         public async Task<OrderStatus> FetchOrderingStatus()
         {
-            var date = WebUtility.UrlEncode(DateTime.UtcNow.ToString("s"));
-
             using (var client = new HttpClient(new NativeMessageHandler()))
             {
-                using (var req = new HttpRequestMessage(HttpMethod.Get, Configuration.Routes.OrderingStatus + "?date=" + date))
+                using (var req = new HttpRequestMessage(HttpMethod.Get, Configuration.Routes.OrderingStatus + "?date=" + WebUtility.UrlEncode(DateTime.UtcNow.ToISOString())))
                 {
                     try
                     {
                         var resp = await client.RequestAsync<OrderStatus>(req);
-                        OrderingStatusOpen = !resp.Data.Closed;
+                        #if DEBUG
+                        OrderingStatusOpen = true;
+                        //                        OrderingStatusOpen = !resp.Data.Closed;
+                        #endif
                         return resp.Data;
                     }
                     catch (Exception e)
@@ -121,33 +121,24 @@ namespace LunchPac
             }
         }
 
-        public class OrderCreatedDTO
-        {
-            public int OrderId { get; set; }
-        }
-
         public async Task DeleteOrder(Order order)
         {
-            var status = await FetchOrderingStatus();
+            await FetchOrderingStatus();
 
-            OrderingStatusOpen = !status.Closed;
-
-            if (status.Closed)
+            if (!OrderingStatusOpen)
             {
                 throw new Exception("Lunch ordering is closed :(.\nPlease contact the responsible team directly.");
             }
-                
-            #if DEBUG
-            throw new Exception("Not Available in Debug Mode");
-            #endif
+//            #if DEBUG
+//            throw new Exception("Not Available in Debug Mode");
+//            #endif
 
             using (var client = new HttpClient(new NativeMessageHandler()))
             {
-                using (var req = new HttpRequestMessage(HttpMethod.Delete, Configuration.Routes.Order))
+                using (var req = new HttpRequestMessage(HttpMethod.Delete, Configuration.Routes.Order + "/?orderid=" + order.OrderId))
                 {
                     try
                     {
-                        req.Content = new JsonContent(JsonConvert.SerializeObject(new {order.OrderId}));
                         await client.RequestAsync(req);
                       
                         var history = await GetHistory();
@@ -173,11 +164,9 @@ namespace LunchPac
                 throw new Exception("You must fill at least one field.");
             }
                 
-            var status = await FetchOrderingStatus();
+            await FetchOrderingStatus();
 
-            OrderingStatusOpen = !status.Closed;
-
-            if (status.Closed)
+            if (!OrderingStatusOpen)
             {
                 throw new Exception("Lunch ordering is closed :(.\nPlease contact the responsible team directly.");
             }
@@ -185,10 +174,9 @@ namespace LunchPac
             order.AddDate = DateTime.UtcNow;
             order.UserId = LoginManager.LoggedinUser.UserId;
 
-            #if DEBUG
-            throw new Exception("Not Available in Debug Mode");
-            #endif
-
+//            #if DEBUG
+//            throw new Exception("Not Available in Debug Mode");
+//            #endif
             using (var client = new HttpClient(new NativeMessageHandler()))
             {
                 var method = order.OrderId.HasValue ? HttpMethod.Put : HttpMethod.Post;
@@ -196,15 +184,16 @@ namespace LunchPac
                 {
                     try
                     {
-                        req.Content = new JsonContent(JsonConvert.SerializeObject(order));
+                        var json = JsonConvert.SerializeObject(order);
+                        req.Content = new JsonContent(json);
                         if (order.OrderId.HasValue)
                         {
                             await client.RequestAsync(req);
                         }
                         else
                         {
-                            var res = await client.RequestAsync<OrderCreatedDTO>(req);
-                            order.OrderId = res.Data.OrderId;
+                            var res = await client.RequestAsync<int>(req);
+                            order.OrderId = res.Data;
                         }
 
                         var history = await GetHistory();
