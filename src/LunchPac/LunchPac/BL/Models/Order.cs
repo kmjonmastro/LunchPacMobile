@@ -8,22 +8,17 @@ namespace LunchPac
 
         public int UserId { get; set; }
 
-        public string OrderItem { get; set; }
+        public string OrderItem = string.Empty;
 
-        public string Soup { get; set; }
+        public string Soup = string.Empty;
 
-        public string SoupSize { get; set; }
+        public string SoupSize = string.Empty;
 
-        public string OrderComments { get; set; }
+        public string OrderComments = string.Empty;
 
         public DateTime AddDate { get; set; }
 
         public int RestaurantId { get; set; }
-
-        public Order()
-        {
-            
-        }
     }
 }
 
