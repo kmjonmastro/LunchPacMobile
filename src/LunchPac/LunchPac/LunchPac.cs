@@ -24,13 +24,6 @@ namespace LunchPac
 
         protected override void OnSleep()
         {
-            // Handle when your app sleeps
-            Task.Run(() =>
-                {
-                    LoginManager.LoggedinUser = null;
-                    BlobCache.InMemory.InvalidateAll();
-                    BlobCache.LocalMachine.InvalidateAll();
-                });
         }
 
         protected override void OnResume()

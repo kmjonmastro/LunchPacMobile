@@ -130,6 +130,8 @@ namespace LunchPac
         {
             var status = await FetchOrderingStatus();
 
+            OrderingStatusOpen = !status.Closed;
+
             if (status.Closed)
             {
                 throw new Exception("Lunch ordering is closed :(.\nPlease contact the responsible team directly.");
@@ -172,6 +174,8 @@ namespace LunchPac
             }
                 
             var status = await FetchOrderingStatus();
+
+            OrderingStatusOpen = !status.Closed;
 
             if (status.Closed)
             {
