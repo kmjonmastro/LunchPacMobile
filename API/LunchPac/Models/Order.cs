@@ -15,5 +15,11 @@ namespace LunchPac.Models
         public string OrderComments { get; set; }
         public DateTime AddDate { get; set; }
         public int RestaurantId { get; set; }
+        public int FormSection { get; set; }
+
+        public Order()
+        {
+            FormSection = 1;
+        }
     }
 }
