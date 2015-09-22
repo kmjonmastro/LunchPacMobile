@@ -66,9 +66,8 @@ namespace LunchPac
             //fetch the orders
             Task.Run(async () =>
                 {
-                    var orders = await DomainManager.GetHistory();
-                    ExistingOrder = orders.FirstOrDefault(o => o.AddDate.ToLocalTime().Date == DateTime.Today);
-                    var filtered = orders.Where(o => o.RestaurantId == Restaurant.RestaurantId);
+                    ExistingOrder = await DomainManager.GetCurrentOrder();
+                    var filtered = await DomainManager.GetHistory(Restaurant.RestaurantId);
                     var currentOrder = filtered.FirstOrDefault(o => o.AddDate.ToLocalTime().Date == DateTime.Today);
                     var hasOrderForToday = currentOrder != null;
                     Device.BeginInvokeOnMainThread(() =>
@@ -84,7 +83,7 @@ namespace LunchPac
                             {
                                 OrderButtonText = NewOrderTxt;
                                 OrderButtonColor = Color.FromHex(NewOrderButtonColor);
-                                CurrentOrder = new Order();
+                                CurrentOrder = new Order() { RestaurantId = this.Restaurant.RestaurantId };
                             }
                                 
                             PreviousOrders = new ObservableCollection<Order>(filtered);

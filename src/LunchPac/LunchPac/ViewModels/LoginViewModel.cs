@@ -69,11 +69,10 @@ namespace LunchPac
 
                         try
                         {
-                            await DomainManager.GetOrFetchRestaurantsAsync();
-                            await DomainManager.FetchHistory();
+                            var restaurants = await DomainManager.GetOrFetchRestaurantsAsync();
+                            await DomainManager.FetchHistory(restaurants);
                             await DomainManager.FetchOrderingStatus();
 
-//                            var vm = await Navigator.PopModalAsync().ConfigureAwait(false);
                             Device.BeginInvokeOnMainThread(() =>
                                 {
                                     Navigator.PopModalAsync().ConfigureAwait(false);

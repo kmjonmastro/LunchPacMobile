@@ -1,12 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-	x:Class="LunchPac.LandingPage" 
-	xmlns:sys="clr-namespace:System;assembly=mscorlib" 
-	Title = "Restaurants">
+xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+x:Class="LunchPac.HistoryPage">
 	<ContentPage.Content>
 	<StackLayout VerticalOptions="Start">
-			<ListView x:Name="RestaurantListView" ItemSelected="RestaurantSelected" ItemsSource="{Binding Restaurants}">
+			<ListView x:Name="RestaurantListView" ItemSelected="OnItemSelected"  ItemsSource="{Binding Restaurants}">
 			    <ListView.ItemTemplate>
 			      <DataTemplate>
 			        <TextCell Text="{Binding RestaurantName}" TextColor="#2C3E50"/>
@@ -16,5 +14,3 @@
 	</StackLayout>
 	</ContentPage.Content>
 </ContentPage>
-
-

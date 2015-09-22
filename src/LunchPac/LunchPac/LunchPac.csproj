@@ -66,6 +66,12 @@
     <Compile Include="BL\Managers\DomainManager.cs" />
     <Compile Include="ViewModels\LandingPageViewModel.cs" />
     <Compile Include="BL\Models\OrderStatus.cs" />
+    <Compile Include="Helpers\Extensions.cs" />
+    <Compile Include="Renderers\StyledEntryRenderer.cs" />
+    <Compile Include="ViewModels\HistoryViewModel.cs" />
+    <Compile Include="Views\HistoryPage.xaml.cs">
+      <DependentUpon>HistoryPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
@@ -131,6 +137,8 @@
     <Folder Include="Views\" />
     <Folder Include="BL\" />
     <Folder Include="BL\Managers\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Renderers\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\LoginPage.xaml">
@@ -143,6 +151,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\RestaurantPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\HistoryPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

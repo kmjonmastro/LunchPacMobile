@@ -1,22 +1,27 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="LunchPac.LoginPage" Title="{Binding Title}">
+<ContentPage 
+	xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	xmlns:local="clr-namespace:LunchPac;assembly=LunchPac"
+
+	BackgroundColor="#184691" x:Class="LunchPac.LoginPage" Title="{Binding Title}">
 	<ContentPage.Content>
 	<StackLayout
 		VerticalOptions="FillAndExpand"
-		Spacing="20" Padding="0, 20, 0, 0">
-		  	<StackLayout.Padding>
+		Spacing="20" Padding="20, 40, 20, 0">
+<!--		  	<StackLayout.Padding>
 			    <OnPlatform x:TypeArguments="Thickness"
 			                iOS="0, 20, 0, 0"/>
-			</StackLayout.Padding>
-			<Image Source="workwavelunchpac680" Aspect="AspectFit"></Image>
+			</StackLayout.Padding>-->
+			<Image Source="logowhite" Aspect="AspectFit"></Image>
 			<StackLayout
 				BackgroundColor="Transparent"
 				VerticalOptions="FillAndExpand"
 				Spacing="40"
-				Padding="50, 50, 50, 0">
-				<Entry Placeholder="Username" Text="{Binding EmailAdress}" HeightRequest="60" Keyboard="Email" BackgroundColor="White"/>
-				<Entry Placeholder="Password" Text="{Binding Password}" HeightRequest="60" IsPassword="true" />
-				<Button  Text="Login" HeightRequest="60" Clicked="OnLoginButtonClicked" IsEnabled="{Binding LoginButtonEnabled}" x:Name="LoginButton" BackgroundColor="#184691" BorderRadius="0" TextColor="White" FontSize="20" />
+				Padding="30, 50, 30, 0">
+				<local:StyledEntryRenderer Placeholder="Username" Text="{Binding EmailAdress}" HeightRequest="50" Keyboard="Email" BackgroundColor="#607BA6" TextColor="White" />
+				<local:StyledEntryRenderer Placeholder="Password" Text="{Binding Password}" HeightRequest="50" IsPassword="true" BackgroundColor="#607BA6" TextColor="White" />
+				<Button  Text="Login" HeightRequest="50" Clicked="OnLoginButtonClicked" IsEnabled="{Binding LoginButtonEnabled}" x:Name="LoginButton" BackgroundColor="#318FD8" BorderRadius="0" TextColor="White" FontSize="20"  />
 				<Label x:Name="ErrorLabel" Text="{Binding LoginError}" IsVisible="{Binding LoginErrorVisible}" TextColor="Gray" XAlign="Center"/>
 			</StackLayout>
 	</StackLayout>

@@ -1,6 +1,22 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <resources>
+	<color name="txt_field_bg">#245b89</color>
     <color name="primary">#2B84D3</color>
-    <color name="primary_dark">#2C3E50</color>
+    <color name="primary_dark">#153B8A</color>
     <color name="accent">#2B84D3</color>
+
+    <color name="WWDarkBlue">#19305b</color>
+    <color name="WWMedDarkBlue">#245b89</color>
+    <color name="WWLightMedBlue">#3A638C</color>
+
+    <color name="WWLightBlue">#288ccb</color>
+    <color name="darkgraycolor">#8898b7</color>
+    <color name="lightgray">#8898b7</color>
+    <color name="white">#ffffff</color>
+
+    <color name="in_progress">#258BCA</color>
+    <color name="unscheduled">#626262</color>
+    <color name="not_started">#327891</color>
+    <color name="completed">#85B56F</color>
+    <color name="canceled">#DD5751</color>
 </resources>

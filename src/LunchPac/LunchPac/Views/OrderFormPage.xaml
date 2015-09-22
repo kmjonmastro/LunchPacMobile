@@ -16,7 +16,7 @@
 					BorderRadius="0" VerticalOptions="StartAndExpand" FontAttributes="Bold"
 					TextColor="White" IsEnabled="{Binding DeleteButtonEnabled}" IsVisible="{Binding DeleteButtonVisible}"/>
 
-			<Button Text="Place" Clicked="SubmitClicked" BackgroundColor="#81C134" HorizontalOptions="FillAndExpand"
+			<Button Text="{Binding SubmitButtonText}" Clicked="SubmitClicked" BackgroundColor="#81C134" HorizontalOptions="FillAndExpand"
 					BorderRadius="0" VerticalOptions="StartAndExpand" FontAttributes="Bold"
 					TextColor="White" IsEnabled="{Binding SubmitButtonEnabled}" />
 		</StackLayout>
