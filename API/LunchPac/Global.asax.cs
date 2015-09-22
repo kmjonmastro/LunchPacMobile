@@ -24,7 +24,8 @@ namespace LunchPac
             configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
             configuration.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
                 {
-                    ContractResolver = new ClientReadyJsonResolver()
+                    ContractResolver = new ClientReadyJsonResolver(),
+                    DateTimeZoneHandling = DateTimeZoneHandling.Local
                 };
         }
     }
