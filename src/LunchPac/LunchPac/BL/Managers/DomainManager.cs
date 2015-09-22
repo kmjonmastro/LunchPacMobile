@@ -204,9 +204,7 @@ namespace LunchPac
 
             order.AddDate = DateTime.UtcNow;
             order.UserId = LoginManager.LoggedinUser.UserId;
-//            #if DEBUG
-//            throw new Exception("Not Available in Debug Mode");
-//            #endif
+
             using (var client = new HttpClient(new NativeMessageHandler()))
             {
                 var method = order.OrderId.HasValue ? HttpMethod.Put : HttpMethod.Post;
@@ -214,11 +212,14 @@ namespace LunchPac
                 {
                     try
                     {
+                        var history = await GetHistory();
                         var json = JsonConvert.SerializeObject(order);
                         req.Content = new JsonContent(json);
+
                         if (order.OrderId.HasValue)
                         {
                             await client.RequestAsync(req);
+                            history[order.RestaurantId].RemoveAll(o => o.OrderId == order.OrderId);
                         }
                         else
                         {
@@ -226,8 +227,7 @@ namespace LunchPac
                             order.OrderId = res.Data;
                         }
 
-                        var history = await GetHistory();
-                        history[order.RestaurantId].RemoveAll(o => o.OrderId == order.OrderId);
+                        history[order.RestaurantId].Add(order);
                         await BlobCache.InMemory.InsertObject<Dictionary<int, List<Order>>>(Configuration.CacheKeys.OrderHistory, history);
                     }
                     catch (NetworkException e)
