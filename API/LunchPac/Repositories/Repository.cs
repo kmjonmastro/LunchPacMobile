@@ -95,6 +95,25 @@ namespace LunchPac.Repositories
             }
         }
 
+        public static IEnumerable<T> SelectByDate<TProp>(Expression<Func<T, TProp>> property, DateTime value)
+        {
+            var fieldName = ((MemberExpression)property.Body).Member.Name;
+
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = String.Format("SELECT * FROM {0} WHERE DATEADD(dd, DATEDIFF(dd, 0, {1}), 0) = DATEADD(dd, DATEDIFF(dd, 0, @Date), 0)", TableName, fieldName);
+
+                    cmd.Parameters.AddWithValue("Date", value.Date);
+
+                    return ReadData(cmd);
+                }
+            }
+        }
+
         public static void Delete(object id)
         {
             ExecuteDelete(PrimaryKeyFieldName, id);
