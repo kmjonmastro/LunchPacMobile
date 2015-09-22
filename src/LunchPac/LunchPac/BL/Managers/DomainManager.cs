@@ -57,25 +57,42 @@ namespace LunchPac
             }
         }
 
-        public async Task<Order> CurrentOrder()
+        public async Task<Order> GetCurrentOrder()
         {
-            var orders = await GetHistory();
-            return orders.FirstOrDefault(o => o.AddDate.ToLocalTime().Date == DateTime.Today.Date);
+            var history = await GetHistory();
+            var today = DateTime.Today;
+            foreach (var key in history.Keys)
+            {
+                foreach (var oder in history[key])
+                {
+                    var date = oder.AddDate.ToLocalTime().Date;
+                    if (date == today)
+                    {
+                        return oder;
+                    }
+                }
+            }
+            return null;
         }
 
-        public async Task<List<Order>> GetHistory()
+        public async Task<Dictionary<int, List<Order>>> GetHistory()
         {
-            var history = new List<Order>();
+            var history = new Dictionary<int, List<Order>>();
 
             try
             {
-                history = await BlobCache.InMemory.GetObject<List<Order>>(Configuration.CacheKeys.OrderHistory);
+                history = await BlobCache.InMemory.GetObject<Dictionary<int, List<Order>>>(Configuration.CacheKeys.OrderHistory);
             }
             catch (KeyNotFoundException)
             {
             }
 
             return history;
+        }
+
+        public async Task<List<Order>> GetHistory(int RestaurantId)
+        {
+            return (await GetHistory().ConfigureAwait(false))[RestaurantId];
         }
 
         public async Task<OrderStatus> FetchOrderingStatus()
@@ -101,16 +118,29 @@ namespace LunchPac
             }
         }
 
-        public async Task<List<Order>> FetchHistory()
+        public async Task<Dictionary<int, List<Order>>> FetchHistory(IEnumerable<Restaurant> rests)
+        {
+            var restDic = new Dictionary<int, List<Order>>();
+
+            foreach (var res in rests)
+            {
+                var hist = await FetchHistoryAsync(res);
+                restDic.Add(res.RestaurantId, hist);
+            }
+
+            await BlobCache.InMemory.InsertObject<Dictionary<int, List<Order>>>(Configuration.CacheKeys.OrderHistory, restDic);
+            return restDic;
+        }
+
+        static async Task<List<Order>> FetchHistoryAsync(Restaurant rest)
         {
             using (var client = new HttpClient(new NativeMessageHandler()))
             {
-                using (var req = new HttpRequestMessage(HttpMethod.Get, Configuration.Routes.OrderhistoryUrl + "?userid=" + LoginManager.LoggedinUser.UserId))
+                using (var req = new HttpRequestMessage(HttpMethod.Get, Configuration.Routes.OrderhistoryUrl + "?userid=" + LoginManager.LoggedinUser.UserId + "&restaurantId=" + rest.RestaurantId))
                 {
                     try
                     {
                         var res = await client.RequestAsync<List<Order>>(req);
-                        await BlobCache.InMemory.InsertObject<List<Order>>(Configuration.CacheKeys.OrderHistory, res.Data);
                         return res.Data;
                     }
                     catch (Exception e)
@@ -120,6 +150,7 @@ namespace LunchPac
                 }
             }
         }
+
 
         public async Task DeleteOrder(Order order)
         {
@@ -142,8 +173,8 @@ namespace LunchPac
                         await client.RequestAsync(req);
                       
                         var history = await GetHistory();
-                        history.RemoveAll(o => o.OrderId == order.OrderId);
-                        await BlobCache.InMemory.InsertObject<List<Order>>(Configuration.CacheKeys.OrderHistory, history);
+                        history[order.RestaurantId].RemoveAll(o => o.OrderId == order.OrderId);
+                        await BlobCache.InMemory.InsertObject<Dictionary<int, List<Order>>>(Configuration.CacheKeys.OrderHistory, history);
                     }
                     catch (NetworkException e)
                     {
@@ -173,7 +204,6 @@ namespace LunchPac
 
             order.AddDate = DateTime.UtcNow;
             order.UserId = LoginManager.LoggedinUser.UserId;
-
 //            #if DEBUG
 //            throw new Exception("Not Available in Debug Mode");
 //            #endif
@@ -197,9 +227,8 @@ namespace LunchPac
                         }
 
                         var history = await GetHistory();
-                        history.RemoveAll(o => o.OrderId == order.OrderId);
-                        history.Add(order);
-                        await BlobCache.InMemory.InsertObject<List<Order>>(Configuration.CacheKeys.OrderHistory, history);
+                        history[order.RestaurantId].RemoveAll(o => o.OrderId == order.OrderId);
+                        await BlobCache.InMemory.InsertObject<Dictionary<int, List<Order>>>(Configuration.CacheKeys.OrderHistory, history);
                     }
                     catch (NetworkException e)
                     {
