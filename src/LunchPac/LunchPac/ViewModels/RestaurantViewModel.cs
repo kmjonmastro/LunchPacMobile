@@ -9,6 +9,7 @@ namespace LunchPac
 {
     public class RestaurantViewModel: ViewModelBase
     {
+        //Xamarin doesn't have conditinal binding, so we need another layer of indirection between the Order Model and the View
         public class OrderModel
         {
             public bool CurrentOrder { get; set; }
@@ -100,6 +101,7 @@ namespace LunchPac
                                 CurrentOrder = new Order() { RestaurantId = this.Restaurant.RestaurantId };
                             }
 
+                            //Hack to allow current order to be highlighted
                             var models = filtered.Select((order) => {
                                 OrderModel orderModel = new OrderModel(order, order.OrderId == ExistingOrder.OrderId);
                                 return orderModel;
