@@ -121,6 +121,8 @@
     <AndroidResource Include="Resources\drawable-hdpi\ww_icon.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ww_icon.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ww_icon.png" />
+    <AndroidResource Include="Resources\drawable\newcross.png" />
+    <AndroidResource Include="Resources\drawable\previous.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.5.0.6446\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.5.0.6446\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -130,9 +132,5 @@
       <Project>{19E04417-9028-408A-8AC5-8E0ED0353FA5}</Project>
       <Name>LunchPac</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\drawable\newcross.png" />
-    <BundleResource Include="Resources\drawable\previous.png" />
   </ItemGroup>
 </Project>
