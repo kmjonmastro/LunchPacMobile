@@ -164,6 +164,9 @@ namespace LunchPac.Droid
 			// aapt resource value: 0x7f050000
 			public const int MyTheme_Base = 2131034112;
 			
+			// aapt resource value: 0x7f050005
+			public const int TabTextStyle = 2131034117;
+			
 			static Style()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();

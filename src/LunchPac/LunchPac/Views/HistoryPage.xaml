@@ -4,7 +4,7 @@ xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 x:Class="LunchPac.HistoryPage">
 	<ContentPage.Content>
 	<StackLayout VerticalOptions="Start">
-			<ListView x:Name="RestaurantListView" ItemSelected="OnItemSelected"  ItemsSource="{Binding Restaurants}">
+			<ListView x:Name="RestaurantListView" ItemSelected="OnItemSelected"  ItemsSource="{Binding PreviousOrders}">
 			    <ListView.ItemTemplate>
 			      <DataTemplate>
 			        <TextCell Text="{Binding RestaurantName}" TextColor="#2C3E50"/>

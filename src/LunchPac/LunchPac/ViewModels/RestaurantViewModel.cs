@@ -119,6 +119,19 @@ namespace LunchPac
                 Navigator.PushAsync<OrderFormViewModel>((vm) =>
                 vm.SetOrder(CurrentOrder));
         }
+
+        public void HandleHistoryItemClicked(Order order)
+        {
+            if (order != null)
+            {
+                if (ExistingOrder != null)
+                    order.OrderId = ExistingOrder.OrderId;
+                else
+                    order.OrderId = null;
+                
+                Navigator.PushAsync<OrderFormViewModel>((vm) => vm.SetOrder(order));
+            }
+        }
     }
 }
 

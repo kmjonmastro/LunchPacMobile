@@ -131,4 +131,8 @@
       <Name>LunchPac</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\drawable\newcross.png" />
+    <BundleResource Include="Resources\drawable\previous.png" />
+  </ItemGroup>
 </Project>
