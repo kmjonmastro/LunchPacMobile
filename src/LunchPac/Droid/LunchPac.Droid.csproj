@@ -96,6 +96,7 @@
     <Compile Include="AndroidModule.cs" />
     <Compile Include="Renderers\StyledEntry.cs" />
     <Compile Include="Renderers\CustomNavigationRenderer.cs" />
+    <Compile Include="Renderers\ZoomableWebViewRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
