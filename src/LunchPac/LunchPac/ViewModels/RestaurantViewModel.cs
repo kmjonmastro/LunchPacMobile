@@ -101,23 +101,27 @@ namespace LunchPac
         public void OrderButtonClicked()
         {
             if (ExistingOrder != null && ExistingOrder.RestaurantId != Restaurant.RestaurantId)
+            {
                 Task.Run(async () =>
                     {
-                        var takemethere = await Application.Current.MainPage.DisplayAlert("Oops!", "You already have an order a different restaurant. what would you like to do ?", "Take me there!", "Cancel");
-                        if (takemethere)
-                        {
-                            var restaurants = await DomainManager.GetOrFetchRestaurantsAsync();
-                            var rest = restaurants.FirstOrDefault(r => r.RestaurantId == ExistingOrder.RestaurantId);
-                            Device.BeginInvokeOnMainThread(() =>
+                        var restaurants = await DomainManager.GetOrFetchRestaurantsAsync();
+                        var rest = restaurants.FirstOrDefault(r => r.RestaurantId == ExistingOrder.RestaurantId);
+
+                        Device.BeginInvokeOnMainThread(async () =>
+                            {
+                                var takemethere = await Application.Current.MainPage.DisplayAlert("Oops!", "You already have an order a different restaurant. what would you like to do ?", "Take me there!", "Cancel");
+                                if (takemethere)
                                 {
                                     if (rest != null)
                                         SetRestaurant(rest);
-                                });
-                        }
+                                }
+                            });
                     });
+            }
             else
-                Navigator.PushAsync<OrderFormViewModel>((vm) =>
-                vm.SetOrder(CurrentOrder));
+            {
+                Navigator.PushAsync<OrderFormViewModel>((vm) => vm.SetOrder(CurrentOrder));
+            }
         }
 
         public void HandleHistoryItemClicked(Order order)
