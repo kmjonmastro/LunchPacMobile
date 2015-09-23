@@ -21,6 +21,12 @@ namespace LunchPac
 
         public ObservableCollection<Order> Orders { get { return _Orders; } set { SetRaiseIfPropertyChanged(ref _Orders, value); } }
 
+        public bool _OrderButtonVisible;
+
+        public bool OrderButtonVisible { get { return _OrderButtonVisible; } set { SetRaiseIfPropertyChanged(ref _OrderButtonVisible, value); } }
+
+        private Order CurrentOrder;
+
         public LandingPageViewModel(INavigator Navigator, DomainManager DomainManager)
         {
             this.DomainManager = DomainManager;
@@ -30,6 +36,9 @@ namespace LunchPac
 
         public async void Refresh()
         {
+            CurrentOrder = await DomainManager.GetCurrentOrder();
+            OrderButtonVisible = CurrentOrder != null;
+
             try
             {
                 var list = await DomainManager.GetOrFetchRestaurantsAsync().ConfigureAwait(false);
@@ -68,6 +77,12 @@ namespace LunchPac
                 Navigator.PushAsync<OrderFormViewModel>((vm) =>
                     {
                     });
+        }
+
+        public void HandleOrderButtonClicked()
+        {
+            if (CurrentOrder != null)
+                Navigator.PushAsync<OrderFormViewModel>((vm) => vm.SetOrder(CurrentOrder));
         }
     }
 }

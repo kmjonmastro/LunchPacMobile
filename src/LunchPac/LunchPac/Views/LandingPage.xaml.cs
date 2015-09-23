@@ -29,6 +29,11 @@ namespace LunchPac
             ((ListView)sender).SelectedItem = null;
             LandingPageViewModel.HandleOrderSelected(item as Order);
         }
+
+        public void OnOrderButtonClicked(object sender, EventArgs e)
+        {
+            LandingPageViewModel.HandleOrderButtonClicked();
+        }
     }
 }
 
