@@ -5,14 +5,25 @@
 	xmlns:sys="clr-namespace:System;assembly=mscorlib" 
 	Title = "Restaurants">
 	<ContentPage.Content>
-	<StackLayout VerticalOptions="Start">
-			<ListView x:Name="RestaurantListView" ItemSelected="RestaurantSelected" ItemsSource="{Binding Restaurants}">
-			    <ListView.ItemTemplate>
-			      <DataTemplate>
-			        <TextCell Text="{Binding RestaurantName}" TextColor="#2C3E50"/>
-			      </DataTemplate>
-			    </ListView.ItemTemplate>
-			  </ListView>
+	<StackLayout VerticalOptions="FillAndExpand">
+		<ListView x:Name="RestaurantListView" ItemSelected="RestaurantSelected" ItemsSource="{Binding Restaurants}">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<TextCell Text="{Binding RestaurantName}" TextColor="#2C3E50"/>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+		<Button 
+			x:Name="OrderButton"
+			BackgroundColor="#ED8413" 
+			BorderRadius="0"
+			TextColor="White"
+			IsVisible="{Binding OrderButtonVisible}"
+			HorizontalOptions="FillAndExpand"
+			VerticalOptions="End"
+			Clicked="OnOrderButtonClicked"
+			FontAttributes="Bold"
+			Text="Edit my order"/>
 	</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

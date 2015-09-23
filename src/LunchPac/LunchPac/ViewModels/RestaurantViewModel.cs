@@ -9,26 +9,6 @@ namespace LunchPac
 {
     public class RestaurantViewModel: ViewModelBase
     {
-        //Xamarin doesn't have conditinal binding, so we need another layer of indirection between the Order Model and the View
-        //        public class OrderModel
-        //        {
-        //            public bool CurrentOrder { get; set; }
-        //            public Color Background { get; set; }
-        //            public Order Order { get; set; }
-        //
-        //            public OrderModel(Order order, bool currentOrder)
-        //            {
-        //                Order = order;
-        //                CurrentOrder = currentOrder;
-        //                Background = currentOrder ? Color.FromHex("#81C134") : Color.White;
-        //            }
-        //        }
-        //
-        public class OrderModel : Order
-        {
-            public bool IsCurrentOrder { get; set; }
-        }
-
         public string _MenuUrl;
 
         public string MenuUrl { get { return _MenuUrl; } set { SetRaiseIfPropertyChanged(ref _MenuUrl, value); } }
