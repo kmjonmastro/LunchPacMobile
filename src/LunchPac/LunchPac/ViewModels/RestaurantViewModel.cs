@@ -105,13 +105,7 @@ namespace LunchPac
                                 OrderButtonColor = Color.FromHex(NewOrderButtonColor);
                                 CurrentOrder = new Order() { RestaurantId = this.Restaurant.RestaurantId };
                             }
-//                            //Hack to allow current order to be highlighted
-//                            var models = filtered.Select((order) =>
-//                                {
-//                                
-//                                    OrderModel orderModel = new OrderModel(order, order.OrderId == ExistingOrder?.OrderId);
-//                                    return orderModel;
-//                                });
+
                             PreviousOrders = new ObservableCollection<Order>(filtered);
                             OrderButtonEnabled = true;
                         });
