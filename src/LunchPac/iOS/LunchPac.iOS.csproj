@@ -118,8 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\logowhite.png" />
-    <BundleResource Include="Resources\newcross%402x.png" />
-    <BundleResource Include="Resources\previous%402x.png" />
+    <BundleResource Include="Resources\checkmark.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

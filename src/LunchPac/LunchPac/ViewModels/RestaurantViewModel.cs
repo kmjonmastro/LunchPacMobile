@@ -10,18 +10,23 @@ namespace LunchPac
     public class RestaurantViewModel: ViewModelBase
     {
         //Xamarin doesn't have conditinal binding, so we need another layer of indirection between the Order Model and the View
-        public class OrderModel
+        //        public class OrderModel
+        //        {
+        //            public bool CurrentOrder { get; set; }
+        //            public Color Background { get; set; }
+        //            public Order Order { get; set; }
+        //
+        //            public OrderModel(Order order, bool currentOrder)
+        //            {
+        //                Order = order;
+        //                CurrentOrder = currentOrder;
+        //                Background = currentOrder ? Color.FromHex("#81C134") : Color.White;
+        //            }
+        //        }
+        //
+        public class OrderModel : Order
         {
-            public bool CurrentOrder { get; set; }
-            public Color Background { get; set; }
-            public Order Order { get; set; }
-
-            public OrderModel(Order order, bool currentOrder)
-            {
-                Order = order;
-                CurrentOrder = currentOrder;
-                Background = currentOrder ? Color.FromHex("#81C134") : Color.White;
-            }
+            public bool IsCurrentOrder { get; set; }
         }
 
         public string _MenuUrl;
@@ -40,9 +45,9 @@ namespace LunchPac
 
         public Color OrderButtonColor { get { return _OrderButtonColor; } set { SetRaiseIfPropertyChanged(ref _OrderButtonColor, value); } }
 
-        public ObservableCollection<OrderModel> _PreviousOrders;
+        public ObservableCollection<Order> _PreviousOrders;
 
-        public ObservableCollection<OrderModel> PreviousOrders { get { return _PreviousOrders; } set { SetRaiseIfPropertyChanged(ref _PreviousOrders, value); } }
+        public ObservableCollection<Order> PreviousOrders { get { return _PreviousOrders; } set { SetRaiseIfPropertyChanged(ref _PreviousOrders, value); } }
 
         Restaurant Restaurant
         {
@@ -84,15 +89,15 @@ namespace LunchPac
                     ExistingOrder = await DomainManager.GetCurrentOrder();
                     var filtered = await DomainManager.GetHistory(Restaurant.RestaurantId);
                     var currentOrder = filtered.FirstOrDefault(o => o.AddDate.ToLocalTime().Date == DateTime.Today);
-                    var hasOrderForToday = currentOrder != null;
                     Device.BeginInvokeOnMainThread(() =>
                         {
-                             
+                            var hasOrderForToday = currentOrder != null;
                             if (hasOrderForToday)
                             {
                                 OrderButtonText = UpdateOrderTxt;
                                 OrderButtonColor = Color.FromHex(UpdateOrderColor);
                                 CurrentOrder = currentOrder;
+                                currentOrder.IsCurrentOrder = true;
                             }
                             else
                             {
@@ -100,14 +105,14 @@ namespace LunchPac
                                 OrderButtonColor = Color.FromHex(NewOrderButtonColor);
                                 CurrentOrder = new Order() { RestaurantId = this.Restaurant.RestaurantId };
                             }
-
-                            //Hack to allow current order to be highlighted
-                            var models = filtered.Select((order) => {
-                                
-                                OrderModel orderModel = new OrderModel(order, order.OrderId == ExistingOrder?.OrderId);
-                                return orderModel;
-                            });
-                            PreviousOrders = new ObservableCollection<OrderModel>(models);
+//                            //Hack to allow current order to be highlighted
+//                            var models = filtered.Select((order) =>
+//                                {
+//                                
+//                                    OrderModel orderModel = new OrderModel(order, order.OrderId == ExistingOrder?.OrderId);
+//                                    return orderModel;
+//                                });
+                            PreviousOrders = new ObservableCollection<Order>(filtered);
                             OrderButtonEnabled = true;
                         });
                 });
@@ -141,11 +146,10 @@ namespace LunchPac
                 vm.SetOrder(CurrentOrder));
         }
 
-        public void HandleHistoryItemClicked(OrderModel orderModel)
+        public void HandleHistoryItemClicked(Order order)
         {
-            if (orderModel != null && orderModel.Order != null)
+            if (order != null)
             {
-                var order = orderModel.Order;
                 if (ExistingOrder != null)
                     order.OrderId = ExistingOrder.OrderId;
                 else

@@ -228,6 +228,8 @@ namespace LunchPac
                         }
 
                         history[order.RestaurantId].Add(order);
+                        var sorted = history[order.RestaurantId].OrderByDescending(o => o.AddDate).ToList();
+                        history[order.RestaurantId] = sorted;
                         await BlobCache.InMemory.InsertObject<Dictionary<int, List<Order>>>(Configuration.CacheKeys.OrderHistory, history);
                     }
                     catch (NetworkException e)

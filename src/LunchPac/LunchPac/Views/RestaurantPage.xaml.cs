@@ -28,7 +28,7 @@ namespace LunchPac
         {
             var item = ((ListView)sender).SelectedItem;
             ((ListView)sender).SelectedItem = null;
-            RestaurantViewModel.HandleHistoryItemClicked(item as RestaurantViewModel.OrderModel);
+            RestaurantViewModel.HandleHistoryItemClicked(item as Order);
         }
     }
 }

@@ -1,16 +1,26 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="LunchPac.RestaurantPage" Title="{Binding Title}" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 	<TabbedPage.Children>
-		<ContentPage Title="Previous" Icon="previous">
+		<ContentPage Title="History" Icon="previous">
 			<ContentPage.Content>
 				<ListView x:Name="PreviousOrderListView" ItemSelected="OnItemSelected" ItemsSource="{Binding PreviousOrders}" HasUnevenRows="true">
 					<ListView.ItemTemplate>
 				    	<DataTemplate> 
 				    		<ViewCell>
-			    				<StackLayout Orientation="Horizontal" BackgroundColor="{Binding Background}">
-			    					<StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand" Padding="5">
-			    						<Label Text="{Binding Order.OrderItem}" TextColor="#2C3E50" FontSize="16"/>
-			    						<Label Text="{Binding Order.AddDate, StringFormat='{0:MM/dd/yyyy}'}" TextColor="#2C3E50" FontSize="14"/>
+			    				<StackLayout Orientation="Horizontal" >
+			    					<StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+				    					  <StackLayout.Padding>
+										    <OnPlatform x:TypeArguments="Thickness">
+									          <OnPlatform.iOS>
+										        20, 5, 5, 5
+										      </OnPlatform.iOS>
+										    </OnPlatform>
+										  </StackLayout.Padding>
+			    						<Label Text="{Binding OrderItem}" LineBreakMode="TailTruncation" TextColor="#2C3E50" FontSize="18" FontAttributes="Bold"/>
+			    						<Label Text="{Binding AddDate, StringFormat='{0:MM/dd/yyyy}'}" TextColor="#2C3E50" FontSize="14"/>
+			    					</StackLayout>
+			    					<StackLayout HorizontalOptions="End" VerticalOptions="Center" IsVisible="{Binding IsCurrentOrder}">
+			    						<Image Source="checkmark" Aspect="AspectFit"></Image>
 			    					</StackLayout>
 			    				</StackLayout>
 				    		</ViewCell>

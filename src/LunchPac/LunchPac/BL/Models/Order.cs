@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace LunchPac
 {
@@ -19,6 +20,13 @@ namespace LunchPac
         public DateTime AddDate { get; set; }
 
         public int RestaurantId { get; set; }
+
+        #region Client Side Stuff
+
+        [JsonIgnore]
+        public bool IsCurrentOrder { get; set; }
+
+        #endregion
 
         public Order()
         {

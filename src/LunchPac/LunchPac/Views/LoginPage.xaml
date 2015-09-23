@@ -9,10 +9,6 @@
 	<StackLayout
 		VerticalOptions="FillAndExpand"
 		Spacing="20" Padding="20, 40, 20, 0">
-<!--		  	<StackLayout.Padding>
-			    <OnPlatform x:TypeArguments="Thickness"
-			                iOS="0, 20, 0, 0"/>
-			</StackLayout.Padding>-->
 			<Image Source="logowhite" Aspect="AspectFit"></Image>
 			<StackLayout
 				BackgroundColor="Transparent"
