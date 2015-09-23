@@ -16,10 +16,11 @@ namespace LunchPac
 {
     public class DomainManager
     {
-        public bool OrderingStatusOpen = false;
+        public bool OrderingStatusOpen { get; private set; }
 
         public DomainManager()
         {
+            OrderingStatusOpen = false;
         }
 
         async Task<List<Restaurant>> FetchRestaurants()
@@ -104,10 +105,9 @@ namespace LunchPac
                     try
                     {
                         var resp = await client.RequestAsync<OrderStatus>(req);
-                        #if DEBUG
-                        OrderingStatusOpen = true;
-                        //                        OrderingStatusOpen = !resp.Data.Closed;
-                        #endif
+
+                        OrderingStatusOpen = !resp.Data.Closed;
+
                         return resp.Data;
                     }
                     catch (Exception e)
