@@ -1,72 +1,45 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="LunchPac.RestaurantPage" Title="{Binding Title}" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-	<TabbedPage.Children>
-		<ContentPage Title="History" Icon="previous">
-			<ContentPage.Content>
-				<StackLayout VerticalOptions="FillAndExpand">
-					<ListView x:Name="PreviousOrderListView" ItemSelected="OnItemSelected" ItemsSource="{Binding PreviousOrders}" HasUnevenRows="true">
-						<ListView.ItemTemplate>
-					    	<DataTemplate> 
-					    		<ViewCell>
-				    				<StackLayout Orientation="Horizontal" >
-				    					<StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
-					    					  <StackLayout.Padding>
-											    <OnPlatform x:TypeArguments="Thickness">
-										          <OnPlatform.iOS>
-											        20, 5, 5, 5
-											      </OnPlatform.iOS>
-											    </OnPlatform>
-											  </StackLayout.Padding>
-				    						<Label Text="{Binding OrderItem}" LineBreakMode="TailTruncation" TextColor="#2C3E50" FontSize="18" FontAttributes="Bold"/>
-				    						<Label Text="{Binding AddDate, StringFormat='{0:MM/dd/yyyy}'}" TextColor="#2C3E50" FontSize="14"/>
-				    					</StackLayout>
-				    					<StackLayout HorizontalOptions="End" VerticalOptions="Center" IsVisible="{Binding IsCurrentOrder}">
-				    						<Image Source="checkmark" Aspect="AspectFit"></Image>
-				    					</StackLayout>
-				    				</StackLayout>
-					    		</ViewCell>
-					    	</DataTemplate>
-						</ListView.ItemTemplate>
-					</ListView>
-					<Button 
-						x:Name="OrderButtonPrevious"
-						BackgroundColor="{Binding OrderButtonColor}" 
-						BorderRadius="0"
-						TextColor="White"
-						IsEnabled="{Binding OrderButtonEnabled}"
-						HorizontalOptions="FillAndExpand"
-						VerticalOptions="End"
-						Clicked="OnOrderButtonClicked"
-						FontAttributes="Bold"
-						Text="{Binding OrderButtonText}"/>
-				</StackLayout>
-			</ContentPage.Content>
-		</ContentPage>
-		<ContentPage Title="Menu" Icon="newcross">
-			<ContentPage.Content Padding="0">
-				<Grid RowSpacing="0" ColumnSpacing="0">
-					<Grid.RowDefinitions>
-						<RowDefinition Height="*"/>
-						<RowDefinition Height="Auto"/>
-					</Grid.RowDefinitions>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="*"/>
-					</Grid.ColumnDefinitions>
-					<WebView x:Name="Browser" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.ColumnSpan="2" Source="{Binding MenuUrl}" />
-					<Button 
-						x:Name="OrderButton"
-						BackgroundColor="{Binding OrderButtonColor}" 
-						BorderRadius="0"
-						TextColor="White"
-						IsEnabled="{Binding OrderButtonEnabled}"
-						Grid.Row="1" Grid.ColumnSpan="2"
-						HorizontalOptions="FillAndExpand"
-						Clicked="OnOrderButtonClicked"
-						FontAttributes="Bold"
-						Text="{Binding OrderButtonText}"/>
-				</Grid>
-			</ContentPage.Content>
-		</ContentPage>
-	</TabbedPage.Children>
-</TabbedPage>
+<ContentPage Title="History" Icon="previous" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="LunchPac.RestaurantPage" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+	<ContentPage.Content>
+		<StackLayout VerticalOptions="FillAndExpand">
+			<ListView x:Name="PreviousOrderListView" ItemSelected="OnItemSelected" ItemsSource="{Binding PreviousOrders}" HasUnevenRows="true">
+				<ListView.ItemTemplate>
+			    	<DataTemplate> 
+			    		<ViewCell>
+		    				<StackLayout Orientation="Horizontal" >
+		    					<StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+			    					  <StackLayout.Padding>
+									    <OnPlatform x:TypeArguments="Thickness">
+								          <OnPlatform.iOS>
+									        20, 5, 5, 5
+									      </OnPlatform.iOS>
+									    </OnPlatform>
+									  </StackLayout.Padding>
+		    						<Label Text="{Binding OrderItem}" LineBreakMode="TailTruncation" TextColor="#2C3E50" FontSize="18" FontAttributes="Bold"/>
+		    						<Label Text="{Binding AddDate, StringFormat='{0:MM/dd/yyyy}'}" TextColor="#2C3E50" FontSize="14"/>
+		    					</StackLayout>
+		    					<StackLayout HorizontalOptions="End" VerticalOptions="Center" IsVisible="{Binding IsCurrentOrder}">
+		    						<Image Source="checkmark" Aspect="AspectFit"></Image>
+		    					</StackLayout>
+		    				</StackLayout>
+			    		</ViewCell>
+			    	</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+			<Button 
+				x:Name="OrderButtonPrevious"
+				BackgroundColor="{Binding OrderButtonColor}" 
+				BorderRadius="0"
+				TextColor="White"
+				IsEnabled="{Binding OrderButtonEnabled}"
+				HorizontalOptions="FillAndExpand"
+				VerticalOptions="End"
+				Clicked="OnOrderButtonClicked"
+				FontAttributes="Bold"
+				Text="{Binding OrderButtonText}"/>
+		</StackLayout>
+	</ContentPage.Content>
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Menu" x:Name="Menu" Clicked="OnShowMenuButtonClicked" />
+	</ContentPage.ToolbarItems>
+</ContentPage>

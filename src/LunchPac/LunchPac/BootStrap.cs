@@ -45,6 +45,9 @@ namespace LunchPac
             builder.RegisterType<RestaurantPage>().AsSelf().SingleInstance();
             builder.RegisterType<RestaurantViewModel>().AsSelf().SingleInstance();
 
+            builder.RegisterType<MenuPage>().AsSelf().SingleInstance();
+            builder.RegisterType<MenuViewModel>().AsSelf().SingleInstance();
+
             base.ConfigureCore(builder);
         }
 
@@ -54,6 +57,7 @@ namespace LunchPac
             viewFactory.Register<LandingPageViewModel, LandingPage>();
             viewFactory.Register<OrderFormViewModel, OrderFormPage>();
             viewFactory.Register<RestaurantViewModel, RestaurantPage>();
+            viewFactory.Register<MenuViewModel, MenuPage>();
 
         }
     }

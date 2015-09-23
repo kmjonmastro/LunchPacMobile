@@ -135,6 +135,11 @@ namespace LunchPac
                 Navigator.PushAsync<OrderFormViewModel>((vm) => vm.SetOrder(order));
             }
         }
+
+        public void HandleShowMenuButtonClicked()
+        {
+            Navigator.PushModalAsync<MenuViewModel>((vm) => vm.SetRestaurant(Restaurant));
+        }
     }
 }
 

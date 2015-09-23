@@ -3,7 +3,7 @@ using System;
 
 namespace LunchPac
 {
-    public partial class RestaurantPage : TabbedPage
+    public partial class RestaurantPage : ContentPage
     {
         public RestaurantViewModel RestaurantViewModel { get; set; }
 
@@ -29,6 +29,10 @@ namespace LunchPac
             var item = ((ListView)sender).SelectedItem;
             ((ListView)sender).SelectedItem = null;
             RestaurantViewModel.HandleHistoryItemClicked(item as Order);
+        }
+        void OnShowMenuButtonClicked(object sender, EventArgs e)
+        {
+            RestaurantViewModel.HandleShowMenuButtonClicked();
         }
     }
 }
