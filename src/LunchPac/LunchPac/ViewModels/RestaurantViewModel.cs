@@ -109,7 +109,7 @@ namespace LunchPac
 
                         Device.BeginInvokeOnMainThread(async () =>
                             {
-                                var takemethere = await Application.Current.MainPage.DisplayAlert("Oops!", "You already have an order a different restaurant. what would you like to do ?", "Take me there!", "Cancel");
+                                var takemethere = await Application.Current.MainPage.DisplayAlert("Oops!", "You already have an order at a different restaurant. To order from here, delete your current order.", "Take me there", "Cancel");
                                 if (takemethere)
                                 {
                                     if (rest != null)
