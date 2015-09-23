@@ -75,8 +75,15 @@ namespace LunchPac
 
                             Device.BeginInvokeOnMainThread(() =>
                                 {
-                                    Navigator.PopModalAsync().ConfigureAwait(false);
-                                    LPVM.Refresh();
+                                    if (!DomainManager.OrderingStatusOpen)
+                                    {
+                                        Application.Current.MainPage.DisplayAlert("Oh snaap :(", "Too late! Lunch ordering is closed!", "OK");
+                                    }
+                                    else
+                                    {
+                                        Navigator.PopModalAsync().ConfigureAwait(false);
+                                        LPVM.Refresh();
+                                    }
                                 });
                         }
                         catch (Exception e)
