@@ -126,6 +126,11 @@ namespace LunchPac
             Task.Run(async () =>
                 {
                     Exception ex = null;
+
+                    if (Order.OrderId.HasValue && Soup == Order.Soup && OrderComments == Order.OrderComments && OrderItem == Order.OrderItem)
+                    {
+                        throw new Exception("You must edit your order first!");
+                    }
                     try
                     {
                         await DomainManager.UpsertOrder(Order);

@@ -47,5 +47,18 @@
 	<string>Resources/Images.xcassets/AppIcons.appiconset</string>
 	<key>UIStatusBarHidden</key>
 	<true/>
-</dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+	  <dict>
+	  <key>CFBundleURLSchemes</key>
+	  <array>
+	    <string>fb1475462022760700</string>
+	  </array>
+	  </dict>
+	</array>
+	  <key>FacebookAppID</key>
+	  <string>1475462022760700</string>
+	  <key>FacebookDisplayName</key>
+	  <string>LunchPac</string>
+	</dict>
 </plist>
