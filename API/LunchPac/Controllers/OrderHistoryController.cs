@@ -17,7 +17,6 @@ namespace LunchPac.Controllers
                 .Where(o => o.RestaurantId == restaurantId)
                 .OrderByDescending(o => o.AddDate)
                 .GroupBy(o => new { o.OrderItem, o.OrderComments })
-                .Where(g => g.Count() == 1)
                 .Select(g => g.First())
                 .Take(5);
 
