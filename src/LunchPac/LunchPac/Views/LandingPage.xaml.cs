@@ -16,6 +16,12 @@ namespace LunchPac
             BindingContext = LandingPageViewModel;
         }
 
+        protected override void OnAppearing()
+        {
+            LandingPageViewModel.Refresh();
+            base.OnAppearing();
+        }
+
         public void RestaurantSelected(object sender, EventArgs e)
         {
             var item = ((ListView)sender).SelectedItem;
